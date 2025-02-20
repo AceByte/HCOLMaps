@@ -1,5 +1,8 @@
 class Room extends Node {
-    Room(String name, float x, float y) {
+    int floor;
+
+    Room(String name, float x, float y, int floor) {
         super(name, x, y);
+        this.floor = floor;
     }
 }

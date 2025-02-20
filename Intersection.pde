@@ -1,5 +1,8 @@
 class Intersection extends Node {
-    Intersection(String name, float x, float y) {
+    int floor;
+
+    Intersection(String name, float x, float y, int floor) {
         super(name, x, y);
+        this.floor = floor;
     }
 }
