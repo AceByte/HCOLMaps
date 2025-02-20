@@ -88,7 +88,3 @@ HCOLMaps is a project that visualizes a graph of rooms and intersections, and ca
 - `render()`: Renders the UI.
 - `updatePath()`: Updates the path based on the selected start and end nodes.
 - `updateDropdownSelection()`: Ensures the dropdowns reflect the correct selection.
-
-## License
-
-This project is licensed under the MIT License.
