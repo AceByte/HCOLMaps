@@ -1,11 +1,9 @@
-class Staircase {
-    String start, end;
+class Staircase extends Node {
     int startFloor, endFloor;
 
-    Staircase(String start, int startFloor, String end, int endFloor) {
-        this.start = start;
+    Staircase(String id, float x, float y, int startFloor, int endFloor) {
+        super(id, x, y);
         this.startFloor = startFloor;
-        this.end = end;
         this.endFloor = endFloor;
     }
 }

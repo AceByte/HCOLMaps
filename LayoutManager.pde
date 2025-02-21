@@ -51,11 +51,13 @@ class LayoutManager {
 
     void createStaircases() {
         staircases = new Staircase[]{
-            new Staircase("I7", 1, "I8", 2),
+            new Staircase("S1", 550, 100, 1, 2)
         };
 
         for (Staircase staircase : staircases) {
-            graph.addEdge(staircase.start, staircase.end, 1); // Add default weight 1 for staircases
+            graph.addNode(staircase.id, staircase.x, staircase.y);
+            graph.addEdge(staircase.id, "I7", 1); // Connect staircase to intersection on floor 1
+            graph.addEdge(staircase.id, "I8", 1); // Connect staircase to intersection on floor 2
         }
     }
 }

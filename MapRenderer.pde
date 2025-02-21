@@ -7,9 +7,7 @@ class MapRenderer {
     }
 
     void render(List<Node> path) {
-        background(255); // Ensure background is reset
-
-        // Draw edges (hallways)
+        // Draw edges (hallways) on the current floor
         stroke(200);
         strokeWeight(2);
         for (String from : graph.adjacencyList.keySet()) {
@@ -24,26 +22,22 @@ class MapRenderer {
             }
         }
 
-        // Draw nodes (Rooms & Intersections)
-        ellipseMode(CENTER); // Ensure circles are drawn correctly
-        textAlign(CENTER, CENTER);
-        textSize(14); // Ensure labels are visible
-
+        // Draw nodes (Rooms) on the current floor
+        fill(0);
         for (Node node : graph.nodes.values()) {
-            if (node instanceof Room) {
-                if (((Room) node).floor != currentFloor) continue;
-                fill(0, 0, 255); // Blue for rooms
-                ellipse(node.x, node.y, 20, 20);
-                fill(0); // Black text
-                text(node.id, node.x, node.y - 15);
-            } else if (node instanceof Intersection) {
-                if (((Intersection) node).floor != currentFloor) continue;
-                fill(150); // Gray for intersections
+            if (node instanceof Intersection) continue; // Skip intersections
+            if (node instanceof Room && ((Room) node).floor != currentFloor) continue;
+            if (node instanceof Staircase) {
+                rect(node.x - 10, node.y - 10, 20, 20); // Draw staircases as squares
+            } else {
                 ellipse(node.x, node.y, 20, 20);
             }
+            fill(0);
+            textAlign(CENTER, CENTER);
+            text(node.id, node.x, node.y - 15);
         }
 
-        // Draw shortest path
+        // Draw shortest path on the current floor
         if (path != null && path.size() > 1) {
             stroke(255, 0, 0);
             strokeWeight(3);
