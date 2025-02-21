@@ -1,3 +1,5 @@
+import java.util.*;
+
 class UIController {
     ControlP5 cp5;
     Graph graph;
@@ -14,10 +16,11 @@ class UIController {
         this.graph = graph;
         cp5 = new ControlP5(parent);
 
-        // Get the nodes from the graph, excluding intersections
+        // Get the nodes from the graph, excluding intersections and sorting alphabetically
         startNodeItems = graph.getAllNodes().values().stream()
             .filter(node -> !(node instanceof Intersection))
             .map(node -> node.id)
+            .sorted()
             .toArray(String[]::new);
         endNodeItems = startNodeItems.clone();
 
@@ -29,11 +32,15 @@ class UIController {
            .setOpen(false)  // Keep dropdown closed after selection
            .onChange(event -> {
                // Capture the selected start node value
-               String selectedStartNode = event.getController().getLabel();
+               String selectedStartNode = event.getController().getValueLabel().getText();
+               println("Dropdown start node selected: " + selectedStartNode);
 
                // Update the start node if it's valid
                if (selectedStartNode != null && !selectedStartNode.isEmpty()) {
                    startNode = selectedStartNode;
+                   println("Start node updated to: " + startNode);
+               } else {
+                   println("Invalid start node selected");
                }
                updatePath();
            });
@@ -46,21 +53,34 @@ class UIController {
            .setOpen(false)  // Keep dropdown closed after selection
            .onChange(event -> {
                // Capture the selected end node value
-               String selectedEndNode = event.getController().getLabel();
+               String selectedEndNode = event.getController().getValueLabel().getText();
+               println("Dropdown end node selected: " + selectedEndNode);
 
                // Update the end node if it's valid
                if (selectedEndNode != null && !selectedEndNode.isEmpty()) {
                    endNode = selectedEndNode;
+                   println("End node updated to: " + endNode);
+               } else {
+                   println("Invalid end node selected");
                }
                updatePath();
            });
 
         // Set initial values for start and end dropdowns by setting the value in the list.
-        cp5.getController("startDropdown").setStringValue(startNode);
-        cp5.getController("endDropdown").setStringValue(endNode);
+        cp5.get(ScrollableList.class, "startDropdown").setStringValue(startNode);
+        cp5.get(ScrollableList.class, "endDropdown").setStringValue(endNode);
 
         // Ensure the dropdowns show the right selected value immediately
         updateDropdownSelection();
+
+        // Button to calculate new path
+        cp5.addButton("calculatePathButton")
+           .setLabel("Calculate Path")
+           .setPosition(380, parent.height - 150)
+           .setSize(150, 30)
+           .onClick(event -> {
+               updatePath();  // Ensure the path is updated after button click
+           });
     }
 
     void render() {
@@ -72,9 +92,10 @@ class UIController {
 
     void updatePath() {
         // Retrieve the current values from the dropdowns
-        startNode = cp5.get(ScrollableList.class, "startDropdown").getLabel();
-        endNode = cp5.get(ScrollableList.class, "endDropdown").getLabel();
+        startNode = cp5.get(ScrollableList.class, "startDropdown").getValueLabel().getText();
+        endNode = cp5.get(ScrollableList.class, "endDropdown").getValueLabel().getText();
 
+        println("Updating path from " + startNode + " to " + endNode);
         parent.updatePath(startNode, endNode);  // Now calls updatePath in the main class
     }
 

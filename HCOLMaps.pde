@@ -39,13 +39,14 @@ void draw() {
 }
 
 void updatePath(String start, String end) {
+    println("Calculating path from " + start + " to " + end);
     Dijkstra dijkstra = new Dijkstra(layout.getGraph());
     path = dijkstra.findShortestPath(start, end);
     println("Current path: " + path);
 }
 
 void changeFloor(int floor) {
-    if (floor >= 1 && floor <= 2) { // Assuming there are only 2 floors
+    if (floor >= 1 && floor <= 3) { // Updated to handle 3 floors
         currentFloor = floor;
         mapRenderer.changeFloor(floor);
         println("Current floor: " + currentFloor);

@@ -23,6 +23,12 @@ class Graph {
     }
 
     void addEdge(String from, String to, int weight) {
+        if (!adjacencyList.containsKey(from)) {
+            adjacencyList.put(from, new HashMap<>());
+        }
+        if (!adjacencyList.containsKey(to)) {
+            adjacencyList.put(to, new HashMap<>());
+        }
         adjacencyList.get(from).put(to, weight);
         adjacencyList.get(to).put(from, weight);
     }

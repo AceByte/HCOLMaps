@@ -24,7 +24,25 @@ class LayoutManager {
             new Room("I", 450, 300, 1),
             new Room("J", 650, 300, 1),
             new Room("K", 50, 50, 2),
-            new Room("L", 250, 50, 2)
+            new Room("L", 250, 50, 2),
+            new Room("M", 450, 50, 2),
+            new Room("N", 250, 250, 2),
+            new Room("O", 450, 250, 2),
+            new Room("P", 650, 50, 2),
+            new Room("Q", 650, 250, 2),
+            new Room("R", 50, 250, 2),
+            new Room("S", 450, 300, 2),
+            new Room("T", 650, 300, 2),
+            new Room("U", 50, 50, 3),
+            new Room("V", 250, 50, 3),
+            new Room("W", 450, 50, 3),
+            new Room("X", 250, 250, 3),
+            new Room("Y", 450, 250, 3),
+            new Room("Z", 650, 50, 3),
+            new Room("AA", 650, 250, 3),
+            new Room("BB", 50, 250, 3),
+            new Room("CC", 450, 300, 3),
+            new Room("DD", 650, 300, 3)
         };
 
         for (Room room : rooms) {
@@ -41,7 +59,20 @@ class LayoutManager {
             new Intersection("I5", 650, 150, 1),
             new Intersection("I6", 550, 300, 1),
             new Intersection("I7", 550, 100, 1),
-            new Intersection("I8", 550, 100, 2)
+            new Intersection("I8", 50, 150, 2),
+            new Intersection("I9", 250, 150, 2),
+            new Intersection("I10", 450, 150, 2),
+            new Intersection("I11", 550, 150, 2),
+            new Intersection("I12", 650, 150, 2),
+            new Intersection("I13", 550, 300, 2),
+            new Intersection("I14", 550, 250, 2),
+            new Intersection("I15", 50, 150, 3),
+            new Intersection("I16", 250, 150, 3),
+            new Intersection("I17", 450, 150, 3),
+            new Intersection("I18", 550, 150, 3),
+            new Intersection("I19", 650, 150, 3),
+            new Intersection("I20", 550, 300, 3),
+            new Intersection("I21", 550, 250, 3)
         };
 
         for (Intersection intersection : intersections) {
@@ -51,13 +82,15 @@ class LayoutManager {
 
     void createStaircases() {
         staircases = new Staircase[]{
-            new Staircase("S1", 550, 100, 1, 2)
+            new Staircase("S1", 550, 100, 1, 2),
+            new Staircase("S2", 550, 250, 2, 3)
         };
 
         for (Staircase staircase : staircases) {
             graph.addStaircase(staircase.id, staircase.x, staircase.y, staircase.startFloor, staircase.endFloor);
             graph.addEdge(staircase.id, "I7", 1); // Connect staircase to intersection on floor 1
-            graph.addEdge(staircase.id, "I8", 1); // Connect staircase to intersection on floor 2
+            graph.addEdge(staircase.id, "I14", 1); // Connect staircase to intersection on floor 2
+            graph.addEdge(staircase.id, "I21", 1); // Connect staircase to intersection on floor 3
         }
     }
 }

@@ -12,12 +12,12 @@ class MapRenderer {
         strokeWeight(2);
         for (String from : graph.adjacencyList.keySet()) {
             Node nodeA = getNode(from);
-            if (nodeA == null || nodeA instanceof Room && ((Room) nodeA).floor != currentFloor) continue;
-            if (nodeA instanceof Intersection && ((Intersection) nodeA).floor != currentFloor) continue;
+            if (nodeA == null || (nodeA instanceof Room && ((Room) nodeA).floor != currentFloor) ||
+                (nodeA instanceof Intersection && ((Intersection) nodeA).floor != currentFloor)) continue;
             for (String to : graph.adjacencyList.get(from).keySet()) {
                 Node nodeB = getNode(to);
-                if (nodeB == null || nodeB instanceof Room && ((Room) nodeB).floor != currentFloor) continue;
-                if (nodeB instanceof Intersection && ((Intersection) nodeB).floor != currentFloor) continue;
+                if (nodeB == null || (nodeB instanceof Room && ((Room) nodeB).floor != currentFloor) ||
+                    (nodeB instanceof Intersection && ((Intersection) nodeB).floor != currentFloor)) continue;
                 line(nodeA.x, nodeA.y, nodeB.x, nodeB.y);
             }
         }
