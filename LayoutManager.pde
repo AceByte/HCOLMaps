@@ -28,7 +28,7 @@ class LayoutManager {
         };
 
         for (Room room : rooms) {
-            graph.addNode(room.id, room.x, room.y);
+            graph.addRoom(room.id, room.x, room.y, room.floor);
         }
     }
 
@@ -45,7 +45,7 @@ class LayoutManager {
         };
 
         for (Intersection intersection : intersections) {
-            graph.addNode(intersection.id, intersection.x, intersection.y);
+            graph.addIntersection(intersection.id, intersection.x, intersection.y, intersection.floor);
         }
     }
 
@@ -55,7 +55,7 @@ class LayoutManager {
         };
 
         for (Staircase staircase : staircases) {
-            graph.addNode(staircase.id, staircase.x, staircase.y);
+            graph.addStaircase(staircase.id, staircase.x, staircase.y, staircase.startFloor, staircase.endFloor);
             graph.addEdge(staircase.id, "I7", 1); // Connect staircase to intersection on floor 1
             graph.addEdge(staircase.id, "I8", 1); // Connect staircase to intersection on floor 2
         }

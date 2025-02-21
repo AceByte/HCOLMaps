@@ -14,9 +14,12 @@ class UIController {
         this.graph = graph;
         cp5 = new ControlP5(parent);
 
-        // Get the nodes from the graph
-        startNodeItems = graph.nodes.keySet().toArray(new String[0]);
-        endNodeItems = graph.nodes.keySet().toArray(new String[0]);
+        // Get the nodes from the graph, excluding intersections
+        startNodeItems = graph.getAllNodes().values().stream()
+            .filter(node -> !(node instanceof Intersection))
+            .map(node -> node.id)
+            .toArray(String[]::new);
+        endNodeItems = startNodeItems.clone();
 
         // Dropdown for start location
         cp5.addScrollableList("startDropdown")
@@ -32,6 +35,7 @@ class UIController {
                if (selectedStartNode != null && !selectedStartNode.isEmpty()) {
                    startNode = selectedStartNode;
                }
+               updatePath();
            });
 
         // Dropdown for end location
@@ -48,6 +52,7 @@ class UIController {
                if (selectedEndNode != null && !selectedEndNode.isEmpty()) {
                    endNode = selectedEndNode;
                }
+               updatePath();
            });
 
         // Set initial values for start and end dropdowns by setting the value in the list.
@@ -56,15 +61,6 @@ class UIController {
 
         // Ensure the dropdowns show the right selected value immediately
         updateDropdownSelection();
-
-        // Button to calculate new path
-        cp5.addButton("calculatePathButton")
-           .setLabel("Calculate Path")
-           .setPosition(380, parent.height - 150)
-           .setSize(150, 30)
-           .onClick(event -> {
-               updatePath();  // Ensure the path is updated after button click
-           });
     }
 
     void render() {

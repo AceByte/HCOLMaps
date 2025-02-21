@@ -16,7 +16,8 @@ class Dijkstra {
         Map<String, String> previous = new HashMap<>();
         PriorityQueue<String> pq = new PriorityQueue<>(Comparator.comparingInt(distances::get));
 
-        for (String node : graph.nodes.keySet()) {
+        HashMap<String, Node> allNodes = graph.getAllNodes();
+        for (String node : allNodes.keySet()) {
             distances.put(node, Integer.MAX_VALUE);
             previous.put(node, null);
         }
@@ -44,7 +45,7 @@ class Dijkstra {
 
         List<Node> path = new ArrayList<>();
         for (String at = end; at != null; at = previous.get(at)) {
-            path.add(graph.nodes.get(at));
+            path.add(allNodes.get(at));
         }
         Collections.reverse(path);
         return path;

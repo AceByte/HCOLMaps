@@ -11,30 +11,33 @@ class MapRenderer {
         stroke(200);
         strokeWeight(2);
         for (String from : graph.adjacencyList.keySet()) {
-            Node nodeA = graph.nodes.get(from);
-            if (nodeA instanceof Room && ((Room) nodeA).floor != currentFloor) continue;
+            Node nodeA = getNode(from);
+            if (nodeA == null || nodeA instanceof Room && ((Room) nodeA).floor != currentFloor) continue;
             if (nodeA instanceof Intersection && ((Intersection) nodeA).floor != currentFloor) continue;
             for (String to : graph.adjacencyList.get(from).keySet()) {
-                Node nodeB = graph.nodes.get(to);
-                if (nodeB instanceof Room && ((Room) nodeB).floor != currentFloor) continue;
+                Node nodeB = getNode(to);
+                if (nodeB == null || nodeB instanceof Room && ((Room) nodeB).floor != currentFloor) continue;
                 if (nodeB instanceof Intersection && ((Intersection) nodeB).floor != currentFloor) continue;
                 line(nodeA.x, nodeA.y, nodeB.x, nodeB.y);
             }
         }
 
-        // Draw nodes (Rooms) on the current floor
+        // Draw nodes (Rooms and Staircases) on the current floor
         fill(0);
-        for (Node node : graph.nodes.values()) {
-            if (node instanceof Intersection) continue; // Skip intersections
-            if (node instanceof Room && ((Room) node).floor != currentFloor) continue;
-            if (node instanceof Staircase) {
-                rect(node.x - 10, node.y - 10, 20, 20); // Draw staircases as squares
-            } else {
-                ellipse(node.x, node.y, 20, 20);
-            }
+        for (Room room : graph.rooms.values()) {
+            if (room.floor != currentFloor) continue;
+            ellipse(room.x, room.y, 20, 20); // Draw rooms as circles
             fill(0);
             textAlign(CENTER, CENTER);
-            text(node.id, node.x, node.y - 15);
+            text(room.id, room.x, room.y - 15);
+        }
+
+        for (Staircase staircase : graph.staircases.values()) {
+            if (staircase.startFloor != currentFloor && staircase.endFloor != currentFloor) continue;
+            rect(staircase.x - 10, staircase.y - 10, 20, 20); // Draw staircases as squares
+            fill(0);
+            textAlign(CENTER, CENTER);
+            text(staircase.id, staircase.x, staircase.y - 15);
         }
 
         // Draw shortest path on the current floor
@@ -53,6 +56,13 @@ class MapRenderer {
                 line(a.x, a.y, b.x, b.y);
             }
         }
+    }
+
+    Node getNode(String id) {
+        if (graph.rooms.containsKey(id)) return graph.rooms.get(id);
+        if (graph.intersections.containsKey(id)) return graph.intersections.get(id);
+        if (graph.staircases.containsKey(id)) return graph.staircases.get(id);
+        return null;
     }
 
     void changeFloor(int floor) {
