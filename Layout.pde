@@ -1,17 +1,17 @@
 class Layout {
-    Graph graph;
-    LayoutManager layoutManager;
+    Graph graph; // Graph object to manage nodes and edges
+    LayoutManager layoutManager; // LayoutManager object to create rooms and intersections
 
     Layout() {
-        graph = new Graph();
-        layoutManager = new LayoutManager(graph);
-        createRoomsAndHallways();
+        graph = new Graph(); // Initialize the graph
+        layoutManager = new LayoutManager(graph); // Initialize the layout manager with the graph
+        createRoomsAndHallways(); // Create rooms and hallways
     }
 
     void createRoomsAndHallways() {
-        layoutManager.createRooms();
-        layoutManager.createIntersections();
-        layoutManager.createStaircases();
+        layoutManager.createRooms(); // Create rooms
+        layoutManager.createIntersections(); // Create intersections
+        layoutManager.createStaircases(); // Create staircases
 
         // Sample hallways for the first floor
         String[][] hallwayPairs = {
@@ -75,43 +75,43 @@ class Layout {
 
         // Add hallways to graph with calculated weights
         for (String[] pair : hallwayPairs) {
-            int weight = calculateWeight(pair[0], pair[1], layoutManager.rooms, layoutManager.intersections);
-            graph.addEdge(pair[0], pair[1], weight);
+            int weight = calculateWeight(pair[0], pair[1], layoutManager.rooms, layoutManager.intersections); // Calculate weight for the hallway
+            graph.addEdge(pair[0], pair[1], weight); // Add edge to the graph
         }
         for (String[] pair : hallwayPairs2) {
-            int weight = calculateWeight(pair[0], pair[1], layoutManager.rooms, layoutManager.intersections);
-            graph.addEdge(pair[0], pair[1], weight);
+            int weight = calculateWeight(pair[0], pair[1], layoutManager.rooms, layoutManager.intersections); // Calculate weight for the hallway
+            graph.addEdge(pair[0], pair[1], weight); // Add edge to the graph
         }
         for (String[] pair : hallwayPairs3) {
-            int weight = calculateWeight(pair[0], pair[1], layoutManager.rooms, layoutManager.intersections);
-            graph.addEdge(pair[0], pair[1], weight);
+            int weight = calculateWeight(pair[0], pair[1], layoutManager.rooms, layoutManager.intersections); // Calculate weight for the hallway
+            graph.addEdge(pair[0], pair[1], weight); // Add edge to the graph
         }
     }
 
     int calculateWeight(String start, String end, Room[] rooms, Intersection[] intersections) {
-        Node startNode = findNode(start, rooms, intersections);
-        Node endNode = findNode(end, rooms, intersections);
+        Node startNode = findNode(start, rooms, intersections); // Find the start node
+        Node endNode = findNode(end, rooms, intersections); // Find the end node
         if (startNode != null && endNode != null) {
-            return (int) dist(startNode.x, startNode.y, endNode.x, endNode.y);
+            return (int) dist(startNode.x, startNode.y, endNode.x, endNode.y); // Calculate the distance between the nodes
         }
-        return 0;
+        return 0; // Return 0 if nodes are not found
     }
 
     Node findNode(String id, Room[] rooms, Intersection[] intersections) {
         for (Room room : rooms) {
             if (room.id.equals(id)) {
-                return room;
+                return room; // Return the room if the ID matches
             }
         }
         for (Intersection intersection : intersections) {
             if (intersection.id.equals(id)) {
-                return intersection;
+                return intersection; // Return the intersection if the ID matches
             }
         }
-        return null;
+        return null; // Return null if no matching node is found
     }
 
     Graph getGraph() {
-        return graph;
+        return graph; // Return the graph
     }
 }

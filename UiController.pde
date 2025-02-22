@@ -1,20 +1,20 @@
-import java.util.*;
+import java.util.*; // Import Java utilities
 
 class UIController {
-    ControlP5 cp5;
-    Graph graph;
-    HCOLMaps parent;  // Correct reference to main sketch
-    String startNode = "A";
-    String endNode = "E";
+    ControlP5 cp5; // ControlP5 object for GUI controls
+    Graph graph; // Graph object to manage nodes and edges
+    HCOLMaps parent; // Reference to the main sketch
+    String startNode = "A"; // Default start node
+    String endNode = "E"; // Default end node
 
     // Manually store items for the dropdowns
-    String[] startNodeItems;
-    String[] endNodeItems;
+    String[] startNodeItems; // Array to store start node items
+    String[] endNodeItems; // Array to store end node items
 
     UIController(HCOLMaps parent, Graph graph) {
-        this.parent = parent;  // Store reference to the main sketch
-        this.graph = graph;
-        cp5 = new ControlP5(parent);
+        this.parent = parent; // Store reference to the main sketch
+        this.graph = graph; // Store reference to the graph
+        cp5 = new ControlP5(parent); // Initialize ControlP5
 
         // Get the nodes from the graph, excluding intersections and sorting alphabetically
         startNodeItems = graph.getAllNodes().values().stream()
@@ -22,14 +22,14 @@ class UIController {
             .map(node -> node.id)
             .sorted()
             .toArray(String[]::new);
-        endNodeItems = startNodeItems.clone();
+        endNodeItems = startNodeItems.clone(); // Clone the start node items for the end node items
 
         // Dropdown for start location
         cp5.addScrollableList("startDropdown")
-           .setPosition(20, parent.height - 150)
-           .setSize(150, 100)
-           .addItems(startNodeItems)
-           .setOpen(false)  // Keep dropdown closed after selection
+           .setPosition(20, parent.height - 150) // Set the position of the dropdown
+           .setSize(150, 100) // Set the size of the dropdown
+           .addItems(startNodeItems) // Add items to the dropdown
+           .setOpen(false) // Keep dropdown closed after selection
            .onChange(event -> {
                // Capture the selected start node value
                String selectedStartNode = event.getController().getValueLabel().getText();
@@ -42,15 +42,15 @@ class UIController {
                } else {
                    println("Invalid start node selected");
                }
-               updatePath();
+               updatePath(); // Update the path
            });
 
         // Dropdown for end location
         cp5.addScrollableList("endDropdown")
-           .setPosition(200, parent.height - 150)
-           .setSize(150, 100)
-           .addItems(endNodeItems)
-           .setOpen(false)  // Keep dropdown closed after selection
+           .setPosition(200, parent.height - 150) // Set the position of the dropdown
+           .setSize(150, 100) // Set the size of the dropdown
+           .addItems(endNodeItems) // Add items to the dropdown
+           .setOpen(false) // Keep dropdown closed after selection
            .onChange(event -> {
                // Capture the selected end node value
                String selectedEndNode = event.getController().getValueLabel().getText();
@@ -63,7 +63,7 @@ class UIController {
                } else {
                    println("Invalid end node selected");
                }
-               updatePath();
+               updatePath(); // Update the path
            });
 
         // Set initial values for start and end dropdowns by setting the value in the list.
@@ -71,23 +71,23 @@ class UIController {
         cp5.get(ScrollableList.class, "endDropdown").setStringValue(endNode);
 
         // Ensure the dropdowns show the right selected value immediately
-        updateDropdownSelection();
+        updateDropdownSelection(); // Update the dropdown selection
 
         // Button to calculate new path
         cp5.addButton("calculatePathButton")
-           .setLabel("Calculate Path")
-           .setPosition(380, parent.height - 150)
-           .setSize(150, 30)
+           .setLabel("Calculate Path") // Set the label for the button
+           .setPosition(380, parent.height - 150) // Set the position of the button
+           .setSize(150, 30) // Set the size of the button
            .onClick(event -> {
-               updatePath();  // Ensure the path is updated after button click
+               updatePath(); // Ensure the path is updated after button click
            });
     }
 
     void render() {
-        fill(0);
-        textSize(14);
-        text("Select Start:", 40, parent.height - 160);
-        text("Select End:", 220, parent.height - 160);
+        fill(0); // Set the fill color to black
+        textSize(14); // Set the text size
+        text("Select Start:", 40, parent.height - 160); // Draw the "Select Start" label
+        text("Select End:", 220, parent.height - 160); // Draw the "Select End" label
     }
 
     void updatePath() {
@@ -95,8 +95,8 @@ class UIController {
         startNode = cp5.get(ScrollableList.class, "startDropdown").getValueLabel().getText();
         endNode = cp5.get(ScrollableList.class, "endDropdown").getValueLabel().getText();
 
-        println("Updating path from " + startNode + " to " + endNode);
-        parent.updatePath(startNode, endNode);  // Now calls updatePath in the main class
+        println("Updating path from " + startNode + " to " + endNode); // Print the start and end nodes
+        parent.updatePath(startNode, endNode); // Call updatePath in the main class
     }
 
     // Ensures dropdowns reflect the correct selection

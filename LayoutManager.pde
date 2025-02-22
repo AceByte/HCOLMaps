@@ -1,14 +1,14 @@
 class LayoutManager {
-    Room[] rooms;
-    Intersection[] intersections;
-    Staircase[] staircases;
-    Graph graph;
+    Room[] rooms; // Array to store rooms
+    Intersection[] intersections; // Array to store intersections
+    Staircase[] staircases; // Array to store staircases
+    Graph graph; // Graph object to manage nodes and edges
 
     LayoutManager(Graph graph) {
-        this.graph = graph;
-        createRooms();
-        createIntersections();
-        createStaircases();
+        this.graph = graph; // Initialize the graph
+        createRooms(); // Create rooms
+        createIntersections(); // Create intersections
+        createStaircases(); // Create staircases
     }
 
     void createRooms() {
@@ -46,7 +46,7 @@ class LayoutManager {
         };
 
         for (Room room : rooms) {
-            graph.addRoom(room.id, room.x, room.y, room.floor);
+            graph.addRoom(room.id, room.x, room.y, room.floor); // Add each room to the graph
         }
     }
 
@@ -76,7 +76,7 @@ class LayoutManager {
         };
 
         for (Intersection intersection : intersections) {
-            graph.addIntersection(intersection.id, intersection.x, intersection.y, intersection.floor);
+            graph.addIntersection(intersection.id, intersection.x, intersection.y, intersection.floor); // Add each intersection to the graph
         }
     }
 
@@ -87,7 +87,7 @@ class LayoutManager {
         };
 
         for (Staircase staircase : staircases) {
-            graph.addStaircase(staircase.id, staircase.x, staircase.y, staircase.startFloor, staircase.endFloor);
+            graph.addStaircase(staircase.id, staircase.x, staircase.y, staircase.startFloor, staircase.endFloor); // Add each staircase to the graph
             graph.addEdge(staircase.id, "I7", 1); // Connect staircase to intersection on floor 1
             graph.addEdge(staircase.id, "I14", 1); // Connect staircase to intersection on floor 2
             graph.addEdge(staircase.id, "I21", 1); // Connect staircase to intersection on floor 3
