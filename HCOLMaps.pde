@@ -33,7 +33,7 @@ void setup() {
 }
 
 void draw() {
-    background(255); // Set the background color to white
+    background(20); // Set the background color to white
     mapRenderer.render(path); // Render the map with the current path
     uiController.render(); // Render the UI
 }
