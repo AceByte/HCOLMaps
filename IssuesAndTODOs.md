@@ -23,10 +23,7 @@
 1. **Android Compatibility**
    - Ensure the application can be used on Android devices.
 
-2. **Dark Mode/Light Mode**
-   - Implement a dark mode and light mode for the user interface.
-
-3. **UI Improvements**
+2. **UI Improvements**
    - Improve the overall user interface for better usability.
 
 4. **Create Walls**

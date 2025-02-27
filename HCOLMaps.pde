@@ -17,19 +17,6 @@ void setup() {
 
     // Default path calculation
     updatePath("A", "E"); // Calculate the default path from node A to node E
-
-    // Add buttons for changing floors
-    cp5.addButton("floorUp")
-       .setLabel("Up") // Label for the button
-       .setPosition(700, 50) // Position of the button
-       .setSize(50, 30) // Size of the button
-       .onClick(event -> changeFloor(currentFloor + 1)); // Action to perform on click
-
-    cp5.addButton("floorDown")
-       .setLabel("Down") // Label for the button
-       .setPosition(700, 100) // Position of the button
-       .setSize(50, 30) // Size of the button
-       .onClick(event -> changeFloor(currentFloor - 1)); // Action to perform on click
 }
 
 void draw() {
