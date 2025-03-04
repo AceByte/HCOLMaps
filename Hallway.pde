@@ -1,10 +1,10 @@
 class Hallway {
-    String start, end; // Start and end nodes of the hallway
-    float weight; // Weight (distance) of the hallway
+    String start, end; // Start- og slutnoder for gangen
+    float weight; // Vægt (afstand) af gangen
 
     Hallway(String start, String end, float weight) {
-        this.start = start; // Initialize the start node
-        this.end = end; // Initialize the end node
-        this.weight = weight; // Initialize the weight
+        this.start = start; // Initialiser startnoden
+        this.end = end; // Initialiser slutnoden
+        this.weight = weight; // Initialiser vægten
     }
 }

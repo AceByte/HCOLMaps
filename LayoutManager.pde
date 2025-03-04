@@ -1,14 +1,14 @@
 class LayoutManager {
-    Room[] rooms; // Array to store rooms
-    Intersection[] intersections; // Array to store intersections
-    Staircase[] staircases; // Array to store staircases
-    Graph graph; // Graph object to manage nodes and edges
+    Room[] rooms; // Array til at gemme værelser
+    Intersection[] intersections; // Array til at gemme kryds
+    Staircase[] staircases; // Array til at gemme trapper
+    Graph graph; // Graf-objekt til at administrere noder og kanter
 
     LayoutManager(Graph graph) {
-        this.graph = graph; // Initialize the graph
-        createRooms(); // Create rooms
-        createIntersections(); // Create intersections
-        createStaircases(); // Create staircases
+        this.graph = graph; // Initialiser grafen
+        createRooms(); // Opret værelser
+        createIntersections(); // Opret kryds
+        createStaircases(); // Opret trapper
     }
 
     void createRooms() {
@@ -46,7 +46,7 @@ class LayoutManager {
         };
 
         for (Room room : rooms) {
-            graph.addRoom(room.id, room.x, room.y, room.floor); // Add each room to the graph
+            graph.addRoom(room.id, room.x, room.y, room.floor); // Tilføj hvert værelse til grafen
         }
     }
 
@@ -76,7 +76,7 @@ class LayoutManager {
         };
 
         for (Intersection intersection : intersections) {
-            graph.addIntersection(intersection.id, intersection.x, intersection.y, intersection.floor); // Add each intersection to the graph
+            graph.addIntersection(intersection.id, intersection.x, intersection.y, intersection.floor); // Tilføj hvert kryds til grafen
         }
     }
 
@@ -87,10 +87,10 @@ class LayoutManager {
         };
 
         for (Staircase staircase : staircases) {
-            graph.addStaircase(staircase.id, staircase.x, staircase.y, staircase.startFloor, staircase.endFloor); // Add each staircase to the graph
-            graph.addEdge(staircase.id, "I7", 1); // Connect staircase to intersection on floor 1
-            graph.addEdge(staircase.id, "I14", 1); // Connect staircase to intersection on floor 2
-            graph.addEdge(staircase.id, "I21", 1); // Connect staircase to intersection on floor 3
+            graph.addStaircase(staircase.id, staircase.x, staircase.y, staircase.startFloor, staircase.endFloor); // Tilføj hver trappe til grafen
+            graph.addEdge(staircase.id, "I7", 1); // Forbind trappen til krydset på etage 1
+            graph.addEdge(staircase.id, "I14", 1); // Forbind trappen til krydset på etage 2
+            graph.addEdge(staircase.id, "I21", 1); // Forbind trappen til krydset på etage 3
         }
     }
 }

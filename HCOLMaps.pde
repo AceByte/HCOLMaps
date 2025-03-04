@@ -1,41 +1,41 @@
-import controlP5.*; // Import ControlP5 library for GUI controls
-import java.util.*; // Import Java utilities
+import controlP5.*; // Importer ControlP5-biblioteket til GUI-kontroller
+import java.util.*; // Importer Java-værktøjer
 
-Layout layout; // Layout object to manage the graph layout
-MapRenderer mapRenderer; // MapRenderer object to render the graph
-UIController uiController; // UIController object to manage the UI
-List<Node> path = new ArrayList<>(); // List to store the shortest path
-ControlP5 cp5; // ControlP5 object for GUI controls
-int currentFloor = 1; // Variable to track the current floor
+Layout layout; // Layout-objekt til at administrere grafens layout
+MapRenderer mapRenderer; // MapRenderer-objekt til at gengive grafen
+UIController uiController; // UIController-objekt til at administrere UI
+List<Node> path = new ArrayList<>(); // Liste til at gemme den korteste sti
+ControlP5 cp5; // ControlP5-objekt til GUI-kontroller
+int currentFloor = 1; // Variabel til at spore den aktuelle etage
 
 void setup() {
-    size(800, 600); // Set the size of the window
-    layout = new Layout(); // Initialize the layout
-    mapRenderer = new MapRenderer(layout.getGraph()); // Initialize the map renderer with the graph
-    uiController = new UIController(this, layout.getGraph()); // Initialize the UI controller with the graph
-    cp5 = new ControlP5(this); // Initialize ControlP5
+    size(800, 600); // Sæt størrelsen på vinduet
+    layout = new Layout(); // Initialiser layoutet
+    mapRenderer = new MapRenderer(layout.getGraph()); // Initialiser map renderer med grafen
+    uiController = new UIController(this, layout.getGraph()); // Initialiser UI controller med grafen
+    cp5 = new ControlP5(this); // Initialiser ControlP5
 
-    // Default path calculation
-    updatePath("A", "E"); // Calculate the default path from node A to node E
+    // Standard sti beregning
+    updatePath("A", "E"); // Beregn standardstien fra node A til node E
 }
 
 void draw() {
-    background(20); // Set the background color to white
-    mapRenderer.render(path); // Render the map with the current path
-    uiController.render(); // Render the UI
+    background(20); // Sæt baggrundsfarven til hvid
+    mapRenderer.render(path); // Gengiv kortet med den aktuelle sti
+    uiController.render(); // Gengiv UI
 }
 
 void updatePath(String start, String end) {
-    println("Calculating path from " + start + " to " + end); // Print the start and end nodes
-    Dijkstra dijkstra = new Dijkstra(layout.getGraph()); // Initialize Dijkstra's algorithm with the graph
-    path = dijkstra.findShortestPath(start, end); // Find the shortest path
-    println("Current path: " + path); // Print the current path
+    println("Beregner sti fra " + start + " til " + end); // Udskriv start- og slutnoderne
+    Dijkstra dijkstra = new Dijkstra(layout.getGraph()); // Initialiser Dijkstra's algoritme med grafen
+    path = dijkstra.findShortestPath(start, end); // Find den korteste sti
+    println("Aktuel sti: " + path); // Udskriv den aktuelle sti
 }
 
 void changeFloor(int floor) {
-    if (floor >= 1 && floor <= 3) { // Check if the floor is within the valid range
-        currentFloor = floor; // Update the current floor
-        mapRenderer.changeFloor(floor); // Change the floor in the map renderer
-        println("Current floor: " + currentFloor); // Print the current floor
+    if (floor >= 1 && floor <= 3) { // Tjek om etagen er inden for det gyldige område
+        currentFloor = floor; // Opdater den aktuelle etage
+        mapRenderer.changeFloor(floor); // Skift etagen i map renderer
+        println("Aktuel etage: " + currentFloor); // Udskriv den aktuelle etage
     }
 }

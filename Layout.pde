@@ -1,19 +1,19 @@
 class Layout {
-    Graph graph; // Graph object to manage nodes and edges
-    LayoutManager layoutManager; // LayoutManager object to create rooms and intersections
+    Graph graph; // Graf objekt til at administrere noder og kanter
+    LayoutManager layoutManager; // LayoutManager objekt til at skabe rum og kryds
 
     Layout() {
-        graph = new Graph(); // Initialize the graph
-        layoutManager = new LayoutManager(graph); // Initialize the layout manager with the graph
-        createRoomsAndHallways(); // Create rooms and hallways
+        graph = new Graph(); // Initialiser grafen
+        layoutManager = new LayoutManager(graph); // Initialiser layout manageren med grafen
+        createRoomsAndHallways(); // Opret rum og gange
     }
 
     void createRoomsAndHallways() {
-        layoutManager.createRooms(); // Create rooms
-        layoutManager.createIntersections(); // Create intersections
-        layoutManager.createStaircases(); // Create staircases
+        layoutManager.createRooms(); // Opret rum
+        layoutManager.createIntersections(); // Opret kryds
+        layoutManager.createStaircases(); // Opret trapper
 
-        // Sample hallways for the first floor
+        // Eksempel på gange for første sal
         String[][] hallwayPairs = {
             {"A", "I1"},
             {"I1", "H"},
@@ -33,7 +33,7 @@ class Layout {
             {"I4", "I7"}
         };
 
-        // Sample hallways for the second floor
+        // Eksempel på gange for anden sal
         String[][] hallwayPairs2 = {
             {"K", "I8"},
             {"I8", "R"},
@@ -53,7 +53,7 @@ class Layout {
             {"I11", "I14"}
         };
 
-        // Sample hallways for the third floor
+        // Eksempel på gange for tredje sal
         String[][] hallwayPairs3 = {
             {"U", "I15"},
             {"I15", "BB"},
@@ -73,45 +73,45 @@ class Layout {
             {"I18", "I21"}
         };
 
-        // Add hallways to graph with calculated weights
+        // Tilføj gange til grafen med beregnede vægte
         for (String[] pair : hallwayPairs) {
-            int weight = calculateWeight(pair[0], pair[1], layoutManager.rooms, layoutManager.intersections); // Calculate weight for the hallway
-            graph.addEdge(pair[0], pair[1], weight); // Add edge to the graph
+            int weight = calculateWeight(pair[0], pair[1], layoutManager.rooms, layoutManager.intersections); // Beregn vægt for gangen
+            graph.addEdge(pair[0], pair[1], weight); // Tilføj kant til grafen
         }
         for (String[] pair : hallwayPairs2) {
-            int weight = calculateWeight(pair[0], pair[1], layoutManager.rooms, layoutManager.intersections); // Calculate weight for the hallway
-            graph.addEdge(pair[0], pair[1], weight); // Add edge to the graph
+            int weight = calculateWeight(pair[0], pair[1], layoutManager.rooms, layoutManager.intersections); // Beregn vægt for gangen
+            graph.addEdge(pair[0], pair[1], weight); // Tilføj kant til grafen
         }
         for (String[] pair : hallwayPairs3) {
-            int weight = calculateWeight(pair[0], pair[1], layoutManager.rooms, layoutManager.intersections); // Calculate weight for the hallway
-            graph.addEdge(pair[0], pair[1], weight); // Add edge to the graph
+            int weight = calculateWeight(pair[0], pair[1], layoutManager.rooms, layoutManager.intersections); // Beregn vægt for gangen
+            graph.addEdge(pair[0], pair[1], weight); // Tilføj kant til grafen
         }
     }
 
     int calculateWeight(String start, String end, Room[] rooms, Intersection[] intersections) {
-        Node startNode = findNode(start, rooms, intersections); // Find the start node
-        Node endNode = findNode(end, rooms, intersections); // Find the end node
+        Node startNode = findNode(start, rooms, intersections); // Find startnoden
+        Node endNode = findNode(end, rooms, intersections); // Find slutnoden
         if (startNode != null && endNode != null) {
-            return (int) dist(startNode.x, startNode.y, endNode.x, endNode.y); // Calculate the distance between the nodes
+            return (int) dist(startNode.x, startNode.y, endNode.x, endNode.y); // Beregn afstanden mellem noderne
         }
-        return 0; // Return 0 if nodes are not found
+        return 0; // Returner 0 hvis noderne ikke findes
     }
 
     Node findNode(String id, Room[] rooms, Intersection[] intersections) {
         for (Room room : rooms) {
             if (room.id.equals(id)) {
-                return room; // Return the room if the ID matches
+                return room; // Returner rummet hvis ID'et matcher
             }
         }
         for (Intersection intersection : intersections) {
             if (intersection.id.equals(id)) {
-                return intersection; // Return the intersection if the ID matches
+                return intersection; // Returner krydset hvis ID'et matcher
             }
         }
-        return null; // Return null if no matching node is found
+        return null; // Returner null hvis ingen matchende node findes
     }
 
     Graph getGraph() {
-        return graph; // Return the graph
+        return graph; // Returner grafen
     }
 }
