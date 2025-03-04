@@ -1,15 +1,15 @@
 class Node {
-    String id; // ID of the node
-    float x, y; // Coordinates of the node
+    String id; // ID for noden
+    float x, y; // Koordinater for noden
 
     Node(String id, float x, float y) {
-        this.id = id; // Initialize the ID
-        this.x = x; // Initialize the x-coordinate
-        this.y = y; // Initialize the y-coordinate
+        this.id = id; // Initialiser ID'et
+        this.x = x; // Initialiser x-koordinaten
+        this.y = y; // Initialiser y-koordinaten
     }
 
     @Override
     public String toString() {
-        return id; // Return the ID as the string representation of the node
+        return id; // Returner ID'et som den tekstlige repræsentation af noden
     }
 }

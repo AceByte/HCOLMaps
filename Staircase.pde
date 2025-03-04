@@ -1,11 +1,11 @@
-// Define the Staircase class that extends the Node class
+// Definer Staircase-klassen, der udvider Node-klassen
 class Staircase extends Node {
-    int startFloor, endFloor; // Variables to store the start and end floors of the staircase
+    int startFloor, endFloor; // Variabler til at gemme start- og slutetagerne for trappen
 
-    // Constructor for the Staircase class
+    // Konstruktor for Staircase-klassen
     Staircase(String id, float x, float y, int startFloor, int endFloor) {
-        super(id, x, y); // Call the constructor of the superclass Node
-        this.startFloor = startFloor; // Initialize the start floor
-        this.endFloor = endFloor; // Initialize the end floor
+        super(id, x, y); // Kald konstruktøren af superklassen Node
+        this.startFloor = startFloor; // Initialiser startetagen
+        this.endFloor = endFloor; // Initialiser slutetagen
     }
 }

@@ -1,120 +1,120 @@
-import java.util.*; // Import Java utilities
+import java.util.*; // Importer Java-værktøjer
 
 class UIController {
-    ControlP5 cp5; // ControlP5 object for GUI controls
-    Graph graph; // Graph object to manage nodes and edges
-    HCOLMaps parent; // Reference to the main sketch
-    String startNode = "A"; // Default start node
-    String endNode = "E"; // Default end node
+    ControlP5 cp5; // ControlP5-objekt til GUI-kontroller
+    Graph graph; // Graph-objekt til at administrere noder og kanter
+    HCOLMaps parent; // Reference til hovedskitsen
+    String startNode = "A"; // Standard startnode
+    String endNode = "E"; // Standard slutnode
 
-    // Manually store items for the dropdowns
-    String[] startNodeItems; // Array to store start node items
-    String[] endNodeItems; // Array to store end node items
+    // Manuelt gemme elementer til dropdowns
+    String[] startNodeItems; // Array til at gemme startnode-elementer
+    String[] endNodeItems; // Array til at gemme slutnode-elementer
 
     UIController(HCOLMaps parent, Graph graph) {
-        this.parent = parent; // Store reference to the main sketch
-        this.graph = graph; // Store reference to the graph
-        cp5 = new ControlP5(parent); // Initialize ControlP5
+        this.parent = parent; // Gem reference til hovedskitsen
+        this.graph = graph; // Gem reference til grafen
+        cp5 = new ControlP5(parent); // Initialiser ControlP5
 
-        // Get the nodes from the graph, excluding intersections and sorting alphabetically
+        // Hent noderne fra grafen, ekskluderer kryds og sorterer alfabetisk
         startNodeItems = graph.getAllNodes().values().stream()
             .filter(node -> !(node instanceof Intersection))
             .map(node -> node.id)
             .sorted()
             .toArray(String[]::new);
-        endNodeItems = startNodeItems.clone(); // Clone the start node items for the end node items
+        endNodeItems = startNodeItems.clone(); // Klon startnode-elementerne til slutnode-elementerne
 
-        // Dropdown for start location
+        // Dropdown til startlokation
         cp5.addScrollableList("startDropdown")
-           .setPosition(20, parent.height - 150) // Set the position of the dropdown
-           .setSize(150, 100) // Set the size of the dropdown
-           .addItems(startNodeItems) // Add items to the dropdown
-           .setOpen(false) // Keep dropdown closed after selection
+           .setPosition(20, parent.height - 150) // Sæt positionen af dropdown
+           .setSize(150, 100) // Sæt størrelsen af dropdown
+           .addItems(startNodeItems) // Tilføj elementer til dropdown
+           .setOpen(false) // Hold dropdown lukket efter valg
            .onChange(event -> {
-               // Capture the selected start node value
+               // Fang den valgte startnode-værdi
                String selectedStartNode = event.getController().getValueLabel().getText();
-               println("Dropdown start node selected: " + selectedStartNode);
+               println("Dropdown startnode valgt: " + selectedStartNode);
 
-               // Update the start node if it's valid
+               // Opdater startnode hvis den er gyldig
                if (selectedStartNode != null && !selectedStartNode.isEmpty()) {
                    startNode = selectedStartNode;
-                   println("Start node updated to: " + startNode);
+                   println("Startnode opdateret til: " + startNode);
                } else {
-                   println("Invalid start node selected");
+                   println("Ugyldig startnode valgt");
                }
-               updatePath(); // Update the path
+               updatePath(); // Opdater stien
            });
 
-        // Dropdown for end location
+        // Dropdown til slutlokation
         cp5.addScrollableList("endDropdown")
-           .setPosition(200, parent.height - 150) // Set the position of the dropdown
-           .setSize(150, 100) // Set the size of the dropdown
-           .addItems(endNodeItems) // Add items to the dropdown
-           .setOpen(false) // Keep dropdown closed after selection
+           .setPosition(200, parent.height - 150) // Sæt positionen af dropdown
+           .setSize(150, 100) // Sæt størrelsen af dropdown
+           .addItems(endNodeItems) // Tilføj elementer til dropdown
+           .setOpen(false) // Hold dropdown lukket efter valg
            .onChange(event -> {
-               // Capture the selected end node value
+               // Fang den valgte slutnode-værdi
                String selectedEndNode = event.getController().getValueLabel().getText();
-               println("Dropdown end node selected: " + selectedEndNode);
+               println("Dropdown slutnode valgt: " + selectedEndNode);
 
-               // Update the end node if it's valid
+               // Opdater slutnode hvis den er gyldig
                if (selectedEndNode != null && !selectedEndNode.isEmpty()) {
                    endNode = selectedEndNode;
-                   println("End node updated to: " + endNode);
+                   println("Slutnode opdateret til: " + endNode);
                } else {
-                   println("Invalid end node selected");
+                   println("Ugyldig slutnode valgt");
                }
-               updatePath(); // Update the path
+               updatePath(); // Opdater stien
            });
 
-        // Set initial values for start and end dropdowns by setting the value in the list.
+        // Sæt initiale værdier for start- og slutdropdowns ved at sætte værdien i listen.
         cp5.get(ScrollableList.class, "startDropdown").setStringValue(startNode);
         cp5.get(ScrollableList.class, "endDropdown").setStringValue(endNode);
 
-        // Ensure the dropdowns show the right selected value immediately
-        updateDropdownSelection(); // Update the dropdown selection
+        // Sørg for at dropdowns viser den rigtige valgte værdi med det samme
+        updateDropdownSelection(); // Opdater dropdown-valget
 
-        // Button to calculate new path
+        // Knap til at beregne ny sti
         cp5.addButton("calculatePathButton")
-           .setLabel("Calculate Path") // Set the label for the button
-           .setPosition(380, parent.height - 150) // Set the position of the button
-           .setSize(150, 30) // Set the size of the button
+           .setLabel("Beregn Sti") // Sæt etiketten for knappen
+           .setPosition(380, parent.height - 150) // Sæt positionen af knappen
+           .setSize(150, 30) // Sæt størrelsen af knappen
            .onClick(event -> {
-               updatePath(); // Ensure the path is updated after button click
+               updatePath(); // Sørg for at stien opdateres efter knapklik
            });
 
-        // Add buttons for changing floors
+        // Tilføj knapper til at skifte etager
         cp5.addButton("floorUp")
-           .setLabel("Up") // Label for the button
-           .setPosition(700, 50) // Position of the button
-           .setSize(50, 30) // Size of the button
-           .onClick(event -> parent.changeFloor(parent.currentFloor + 1)); // Action to perform on click
+           .setLabel("Op") // Etiket for knappen
+           .setPosition(700, 50) // Position af knappen
+           .setSize(50, 30) // Størrelse af knappen
+           .onClick(event -> parent.changeFloor(parent.currentFloor + 1)); // Handling ved klik
 
         cp5.addButton("floorDown")
-           .setLabel("Down") // Label for the button
-           .setPosition(700, 100) // Position of the button
-           .setSize(50, 30) // Size of the button
-           .onClick(event -> parent.changeFloor(parent.currentFloor - 1)); // Action to perform on click
+           .setLabel("Ned") // Etiket for knappen
+           .setPosition(700, 100) // Position af knappen
+           .setSize(50, 30) // Størrelse af knappen
+           .onClick(event -> parent.changeFloor(parent.currentFloor - 1)); // Handling ved klik
     }
 
     void render() {
-        fill(0); // Set the fill color to black
-        textSize(14); // Set the text size
-        text("Select Start:", 40, parent.height - 160); // Draw the "Select Start" label
-        text("Select End:", 220, parent.height - 160); // Draw the "Select End" label
+        fill(0); // Sæt fyldfarven til sort
+        textSize(14); // Sæt tekststørrelsen
+        text("Vælg Start:", 40, parent.height - 160); // Tegn "Vælg Start" etiketten
+        text("Vælg Slut:", 220, parent.height - 160); // Tegn "Vælg Slut" etiketten
     }
 
     void updatePath() {
-        // Retrieve the current values from the dropdowns
+        // Hent de aktuelle værdier fra dropdowns
         startNode = cp5.get(ScrollableList.class, "startDropdown").getValueLabel().getText();
         endNode = cp5.get(ScrollableList.class, "endDropdown").getValueLabel().getText();
 
-        println("Updating path from " + startNode + " to " + endNode); // Print the start and end nodes
-        parent.updatePath(startNode, endNode); // Call updatePath in the main class
+        println("Opdaterer sti fra " + startNode + " til " + endNode); // Print start- og slutnoderne
+        parent.updatePath(startNode, endNode); // Kald updatePath i hovedklassen
     }
 
-    // Ensures dropdowns reflect the correct selection
+    // Sørger for at dropdowns afspejler det korrekte valg
     private void updateDropdownSelection() {
-        // Make sure the dropdowns reflect the selected values immediately
+        // Sørg for at dropdowns afspejler de valgte værdier med det samme
         cp5.getController("startDropdown").setStringValue(startNode);
         cp5.getController("endDropdown").setStringValue(endNode);
     }
