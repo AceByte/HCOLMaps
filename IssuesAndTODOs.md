@@ -48,14 +48,6 @@
 
    - Add error handling in the `updatePath` method to handle cases where the start or end nodes are invalid or do not exist.
 
-10. **Visual Indication of Current Floor**
-
-    - Add a visual indication of the current floor on the UI.
-
-11. **Path Highlighting for Different Floors**
-
-    - Ensure the path is highlighted correctly when it spans multiple floors.
-
 12. **Optimize Pathfinding Algorithm**
 
     - Optimize the Dijkstra's algorithm implementation for better performance with larger graphs.
