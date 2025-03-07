@@ -40,14 +40,6 @@
 
    - Add exits to the map to represent possible exit points.
 
-8. **Dynamic Floor Limits**
-
-   - Make the floor limits dynamic to allow for easy extension to more floors.
-
-9. **Error Handling for Invalid Nodes**
-
-   - Add error handling in the `updatePath` method to handle cases where the start or end nodes are invalid or do not exist.
-
 12. **Optimize Pathfinding Algorithm**
 
     - Optimize the Dijkstra's algorithm implementation for better performance with larger graphs.
