@@ -76,8 +76,17 @@ class LayoutManager {
         };
 
         for (Intersection intersection : intersections) {
-            graph.addIntersection(intersection.id, intersection.x, intersection.y, intersection.floor); // Tilføj hvert kryds til grafen
+            graph.addIntersection(intersection.id, intersection.x, intersection.y, intersection.floor); // Add each intersection to the graph
         }
+
+        // Connect intersections on the 3rd floor
+        graph.addEdge("I15", "I16", 1);
+        graph.addEdge("I16", "I17", 1);
+        graph.addEdge("I17", "I18", 1);
+        graph.addEdge("I18", "I19", 1);
+        graph.addEdge("I18", "I20", 1);
+        graph.addEdge("I18", "I21", 1);
+        graph.addEdge("I20", "I21", 1);
     }
 
     void createStaircases() {
@@ -87,10 +96,19 @@ class LayoutManager {
         };
 
         for (Staircase staircase : staircases) {
-            graph.addStaircase(staircase.id, staircase.x, staircase.y, staircase.startFloor, staircase.endFloor); // Tilføj hver trappe til grafen
-            graph.addEdge(staircase.id, "I7", 1); // Forbind trappen til krydset på etage 1
-            graph.addEdge(staircase.id, "I14", 1); // Forbind trappen til krydset på etage 2
-            graph.addEdge(staircase.id, "I21", 1); // Forbind trappen til krydset på etage 3
+            graph.addStaircase(staircase.id, staircase.x, staircase.y, staircase.startFloor, staircase.endFloor); // Add each staircase to the graph
+            if (staircase.startFloor == 1) {
+                graph.addEdge(staircase.id, "I7", 1); // Connect the staircase to the intersection on floor 1
+            }
+            if (staircase.startFloor == 2) {
+                graph.addEdge(staircase.id, "I14", 1); // Connect the staircase to the intersection on floor 2
+            }
+            if (staircase.endFloor == 2) {
+                graph.addEdge(staircase.id, "I14", 1); // Connect the staircase to the intersection on floor 2
+            }
+            if (staircase.endFloor == 3) {
+                graph.addEdge(staircase.id, "I21", 1); // Connect the staircase to the intersection on floor 3
+            }
         }
     }
 }
