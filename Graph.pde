@@ -40,4 +40,50 @@ class Graph {
         allNodes.putAll(staircases); // Tilføj alle trapper til kortet
         return allNodes; // Returner kortet over alle noder
     }
+
+    int getMinFloor() {
+        int minFloor = Integer.MAX_VALUE;
+        for (Room room : rooms.values()) {
+            if (room.floor < minFloor) {
+                minFloor = room.floor;
+            }
+        }
+        for (Intersection intersection : intersections.values()) {
+            if (intersection.floor < minFloor) {
+                minFloor = intersection.floor;
+            }
+        }
+        for (Staircase staircase : staircases.values()) {
+            if (staircase.startFloor < minFloor) {
+                minFloor = staircase.startFloor;
+            }
+            if (staircase.endFloor < minFloor) {
+                minFloor = staircase.endFloor;
+            }
+        }
+        return minFloor;
+    }
+
+    int getMaxFloor() {
+        int maxFloor = Integer.MIN_VALUE;
+        for (Room room : rooms.values()) {
+            if (room.floor > maxFloor) {
+                maxFloor = room.floor;
+            }
+        }
+        for (Intersection intersection : intersections.values()) {
+            if (intersection.floor > maxFloor) {
+                maxFloor = intersection.floor;
+            }
+        }
+        for (Staircase staircase : staircases.values()) {
+            if (staircase.startFloor > maxFloor) {
+                maxFloor = staircase.startFloor;
+            }
+            if (staircase.endFloor > maxFloor) {
+                maxFloor = staircase.endFloor;
+            }
+        }
+        return maxFloor;
+    }
 }

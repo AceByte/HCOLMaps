@@ -6,20 +6,9 @@
 
    - The application does not choose the correct point from the dropdown list.
 
-2. **Hardcoded Floor Limits**
-
-   - The floor limits are hardcoded in the `changeFloor` method, making it difficult to extend the application to more floors.
-
-3. **No Error Handling for Invalid Nodes**
+2. **No Error Handling for Invalid Nodes**
 
    - The `updatePath` method does not handle cases where the start or end nodes are invalid or do not exist.
-
-4. **No Visual Indication of Current Floor**
-
-   - The current floor is not visually indicated on the UI, making it difficult for users to know which floor they are on.
-
-5. **No Path Highlighting for Different Floors**
-   - The path is not highlighted correctly when it spans multiple floors.
 
 ## TODOs
 

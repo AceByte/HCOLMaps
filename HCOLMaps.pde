@@ -33,7 +33,9 @@ void updatePath(String start, String end) {
 }
 
 void changeFloor(int floor) {
-    if (floor >= 1 && floor <= 3) { // Tjek om etagen er inden for det gyldige område
+    int minFloor = layout.getGraph().getMinFloor();
+    int maxFloor = layout.getGraph().getMaxFloor();
+    if (floor >= minFloor && floor <= maxFloor) { // Tjek om etagen er inden for det gyldige område
         currentFloor = floor; // Opdater den aktuelle etage
         mapRenderer.changeFloor(floor); // Skift etagen i map renderer
         println("Aktuel etage: " + currentFloor); // Udskriv den aktuelle etage
