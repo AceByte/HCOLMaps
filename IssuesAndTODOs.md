@@ -2,27 +2,23 @@
 
 ## Issues
 
-1. **Wrong Staircase Used from Floor 2-3**
-
-   - The application uses the wrong staircase when navigating from floor 2 to floor 3.
-
-2. **Dropdown List Selection Issue**
+1. **Dropdown List Selection Issue**
 
    - The application does not choose the correct point from the dropdown list.
 
-3. **Hardcoded Floor Limits**
+2. **Hardcoded Floor Limits**
 
    - The floor limits are hardcoded in the `changeFloor` method, making it difficult to extend the application to more floors.
 
-4. **No Error Handling for Invalid Nodes**
+3. **No Error Handling for Invalid Nodes**
 
    - The `updatePath` method does not handle cases where the start or end nodes are invalid or do not exist.
 
-5. **No Visual Indication of Current Floor**
+4. **No Visual Indication of Current Floor**
 
    - The current floor is not visually indicated on the UI, making it difficult for users to know which floor they are on.
 
-6. **No Path Highlighting for Different Floors**
+5. **No Path Highlighting for Different Floors**
    - The path is not highlighted correctly when it spans multiple floors.
 
 ## TODOs
