@@ -6,13 +6,7 @@ class Graph {
 
     void addRoom(String id, float x, float y, int floor) {
         // This method is redundant and can be removed or updated to include a default category
-        Room room = new Room(id, x, y, floor, "default"); // Opret et nyt værelse med en standardkategori
-        rooms.put(id, room); // Tilføj værelset til kortet
-        adjacencyList.put(id, new HashMap<>()); // Initialiser adjacenslisten for værelset
-    }
-
-    void addRoom(String id, float x, float y, int floor, String category) {
-        Room room = new Room(id, x, y, floor, category); // Opret et nyt værelse
+        Room room = new Room(id, x, y, floor); // Opret et nyt værelse med en standardkategori
         rooms.put(id, room); // Tilføj værelset til kortet
         adjacencyList.put(id, new HashMap<>()); // Initialiser adjacenslisten for værelset
     }

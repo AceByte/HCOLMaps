@@ -13,40 +13,40 @@ class LayoutManager {
 
     void createRooms() {
         rooms = new Room[]{
-            new Room("klasse 1", 50, 50, 1, "klasse"),
-            new Room("B", 250, 50, 1, "klasse"),
-            new Room("C", 450, 50, 1, "klasse"),
-            new Room("D", 250, 250, 1, "klasse"),
-            new Room("E", 450, 250, 1, "Lab"),
-            new Room("F", 650, 50, 1, "Office"),
-            new Room("G", 650, 250, 1, "Office"),
-            new Room("H", 50, 250, 1, "Office"),
-            new Room("I", 450, 300, 1, "Lab"),
-            new Room("J", 650, 300, 1, "Office"),
-            new Room("K", 50, 50, 2, "Office"),
-            new Room("L", 250, 50, 2, "Office"),
-            new Room("M", 450, 50, 2, "Lab"),
-            new Room("N", 250, 250, 2, "Office"),
-            new Room("O", 450, 250, 2, "Lab"),
-            new Room("P", 650, 50, 2, "Office"),
-            new Room("Q", 650, 250, 2, "Office"),
-            new Room("R", 50, 250, 2, "Office"),
-            new Room("S", 450, 300, 2, "Lab"),
-            new Room("T", 650, 300, 2, "Office"),
-            new Room("U", 50, 50, 3, "Office"),
-            new Room("V", 250, 50, 3, "Office"),
-            new Room("W", 450, 50, 3, "Lab"),
-            new Room("X", 250, 250, 3, "Office"),
-            new Room("Y", 450, 250, 3, "Lab"),
-            new Room("Z", 650, 50, 3, "Office"),
-            new Room("AA", 650, 250, 3, "Office"),
-            new Room("BB", 50, 250, 3, "Office"),
-            new Room("CC", 450, 300, 3, "Lab"),
-            new Room("DD", 650, 300, 3, "Office")
+            new Room("A", 50, 50, 1),
+            new Room("B", 250, 50, 1),
+            new Room("C", 450, 50, 1),
+            new Room("D", 250, 250, 1),
+            new Room("E", 450, 250, 1),
+            new Room("F", 650, 50, 1),
+            new Room("G", 650, 250, 1),
+            new Room("H", 50, 250, 1),
+            new Room("I", 450, 300, 1),
+            new Room("J", 650, 300, 1),
+            new Room("K", 50, 50, 2),
+            new Room("L", 250, 50, 2),
+            new Room("M", 450, 50, 2),
+            new Room("N", 250, 250, 2),
+            new Room("O", 450, 250, 2),
+            new Room("P", 650, 50, 2),
+            new Room("Q", 650, 250, 2),
+            new Room("R", 50, 250, 2),
+            new Room("S", 450, 300, 2),
+            new Room("T", 650, 300, 2),
+            new Room("U", 50, 50, 3),
+            new Room("V", 250, 50, 3),
+            new Room("W", 450, 50, 3),
+            new Room("X", 250, 250, 3),
+            new Room("Y", 450, 250, 3),
+            new Room("Z", 650, 50, 3),
+            new Room("AA", 650, 250, 3),
+            new Room("BB", 50, 250, 3),
+            new Room("CC", 450, 300, 3),
+            new Room("DD", 650, 300, 3)
         };
 
         for (Room room : rooms) {
-            graph.addRoom(room.id, room.x, room.y, room.floor, room.category); // Tilføj hvert værelse til grafen
+            graph.addRoom(room.id, room.x, room.y, room.floor); // Tilføj hvert værelse til grafen
         }
     }
 
