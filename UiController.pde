@@ -126,13 +126,15 @@ class UIController {
 
         println("Opdaterer sti fra " + startNode + " til " + endNode); // Print start- og slutnoderne
         parent.updatePath(startNode, endNode); // Kald updatePath i hovedklassen
+
+        updateDropdownSelection(); // Opdater dropdown-valget
     }
 
     // Sørger for at dropdowns afspejler det korrekte valg
     private void updateDropdownSelection() {
         // Sørg for at dropdowns afspejler de valgte værdier med det samme
-        cp5.getController("startDropdown").setStringValue(startNode);
-        cp5.getController("endDropdown").setStringValue(endNode);
+        cp5.get(ScrollableList.class, "startDropdown").setStringValue(startNode);
+        cp5.get(ScrollableList.class, "endDropdown").setStringValue(endNode);
     }
 
     // Opdaterer etiketten for den aktuelle etage
