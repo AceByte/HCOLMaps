@@ -16,7 +16,7 @@ void setup() {
     cp5 = new ControlP5(this); // Initialiser ControlP5
 
     // Standard sti beregning
-    updatePath("A", "E"); // Beregn standardstien fra node A til node E
+    updatePath("A", "CC"); // Beregn standardstien fra node A til node E
 }
 
 void draw() {

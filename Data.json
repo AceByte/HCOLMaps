@@ -75,6 +75,7 @@
     { "from": "S1", "to": "I14", "weight": 50 },
     { "from": "S2", "to": "I14", "weight": 50 },
     { "from": "S2", "to": "I21", "weight": 50 },
+    { "from": "S2", "to": "I20", "weight": 50 },
     { "from": "K", "to": "I8", "weight": 100 },
     { "from": "I8", "to": "R", "weight": 100 },
     { "from": "I8", "to": "I9", "weight": 100 },
