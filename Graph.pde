@@ -1,5 +1,6 @@
 import processing.data.JSONObject;
 import processing.data.JSONArray;
+//im finna be real witchu chief, I don't know what this is
 
 class Graph {
     HashMap<String, Room> rooms = new HashMap<>();
