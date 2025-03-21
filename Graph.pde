@@ -44,7 +44,8 @@ class Graph {
     }
 
     void addRoom(String id, float x, float y, int floor) {
-        Room room = new Room(id, x, y, floor); // Opret et nyt værelse
+        // This method is redundant and can be removed or updated to include a default category
+        Room room = new Room(id, x, y, floor); // Opret et nyt værelse med en standardkategori
         rooms.put(id, room); // Tilføj værelset til kortet
         adjacencyList.put(id, new HashMap<>()); // Initialiser adjacenslisten for værelset
     }
@@ -78,5 +79,51 @@ class Graph {
         allNodes.putAll(intersections); // Tilføj alle kryds til kortet
         allNodes.putAll(staircases); // Tilføj alle trapper til kortet
         return allNodes; // Returner kortet over alle noder
+    }
+
+    int getMinFloor() {
+        int minFloor = Integer.MAX_VALUE;
+        for (Room room : rooms.values()) {
+            if (room.floor < minFloor) {
+                minFloor = room.floor;
+            }
+        }
+        for (Intersection intersection : intersections.values()) {
+            if (intersection.floor < minFloor) {
+                minFloor = intersection.floor;
+            }
+        }
+        for (Staircase staircase : staircases.values()) {
+            if (staircase.startFloor < minFloor) {
+                minFloor = staircase.startFloor;
+            }
+            if (staircase.endFloor < minFloor) {
+                minFloor = staircase.endFloor;
+            }
+        }
+        return minFloor;
+    }
+
+    int getMaxFloor() {
+        int maxFloor = Integer.MIN_VALUE;
+        for (Room room : rooms.values()) {
+            if (room.floor > maxFloor) {
+                maxFloor = room.floor;
+            }
+        }
+        for (Intersection intersection : intersections.values()) {
+            if (intersection.floor > maxFloor) {
+                maxFloor = intersection.floor;
+            }
+        }
+        for (Staircase staircase : staircases.values()) {
+            if (staircase.startFloor > maxFloor) {
+                maxFloor = staircase.startFloor;
+            }
+            if (staircase.endFloor > maxFloor) {
+                maxFloor = staircase.endFloor;
+            }
+        }
+        return maxFloor;
     }
 }

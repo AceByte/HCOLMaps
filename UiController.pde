@@ -87,13 +87,29 @@ class UIController {
            .setLabel("Op") // Etiket for knappen
            .setPosition(700, 50) // Position af knappen
            .setSize(50, 30) // Størrelse af knappen
-           .onClick(event -> parent.changeFloor(parent.currentFloor + 1)); // Handling ved klik
+           .onClick(event -> {
+               parent.changeFloor(parent.currentFloor + 1); // Handling ved klik
+               updateFloorLabel(); // Opdater etiket for etage
+               updateFloorButtons(); // Opdater knapperne for etageskift
+           });
 
         cp5.addButton("floorDown")
            .setLabel("Ned") // Etiket for knappen
            .setPosition(700, 100) // Position af knappen
            .setSize(50, 30) // Størrelse af knappen
-           .onClick(event -> parent.changeFloor(parent.currentFloor - 1)); // Handling ved klik
+           .onClick(event -> {
+               parent.changeFloor(parent.currentFloor - 1); // Handling ved klik
+               updateFloorLabel(); // Opdater etiket for etage
+               updateFloorButtons(); // Opdater knapperne for etageskift
+           });
+
+        // Tilføj etiket for at vise den aktuelle etage
+        cp5.addTextlabel("floorLabel")
+           .setText("Etage: " + parent.currentFloor) // Sæt initial tekst
+           .setPosition(700, 150) // Position af etiketten
+           .setSize(100, 30); // Størrelse af etiketten
+
+        updateFloorButtons(); // Opdater knapperne for etageskift ved initialisering
     }
 
     void render() {
@@ -110,12 +126,37 @@ class UIController {
 
         println("Opdaterer sti fra " + startNode + " til " + endNode); // Print start- og slutnoderne
         parent.updatePath(startNode, endNode); // Kald updatePath i hovedklassen
+
+        updateDropdownSelection(); // Opdater dropdown-valget
     }
 
     // Sørger for at dropdowns afspejler det korrekte valg
     private void updateDropdownSelection() {
         // Sørg for at dropdowns afspejler de valgte værdier med det samme
-        cp5.getController("startDropdown").setStringValue(startNode);
-        cp5.getController("endDropdown").setStringValue(endNode);
+        cp5.get(ScrollableList.class, "startDropdown").setStringValue(startNode);
+        cp5.get(ScrollableList.class, "endDropdown").setStringValue(endNode);
+    }
+
+    // Opdaterer etiketten for den aktuelle etage
+    private void updateFloorLabel() {
+        cp5.get(Textlabel.class, "floorLabel").setText("Etage: " + parent.currentFloor);
+    }
+
+    // Opdaterer synligheden af knapperne for etageskift
+    private void updateFloorButtons() {
+        int minFloor = parent.layout.getGraph().getMinFloor();
+        int maxFloor = parent.layout.getGraph().getMaxFloor();
+
+        if (parent.currentFloor <= minFloor) {
+            cp5.getController("floorDown").hide();
+        } else {
+            cp5.getController("floorDown").show();
+        }
+
+        if (parent.currentFloor >= maxFloor) {
+            cp5.getController("floorUp").hide();
+        } else {
+            cp5.getController("floorUp").show();
+        }
     }
 }

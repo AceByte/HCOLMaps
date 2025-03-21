@@ -35,6 +35,13 @@ class MapRenderer {
             for (int i = 0; i < path.size() - 1; i++) {
                 Node a = path.get(i); // Hent den aktuelle node i stien
                 Node b = path.get(i + 1); // Hent den næste node i stien
+
+                // Check for null nodes
+                if (a == null || b == null) {
+                    println("Warning: Null node in path at index " + i);
+                    continue;
+                }
+
                 if ((a instanceof Room && ((Room) a).floor != currentFloor) ||
                     (a instanceof Intersection && ((Intersection) a).floor != currentFloor) ||
                     (b instanceof Room && ((Room) b).floor != currentFloor) ||
