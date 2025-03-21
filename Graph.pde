@@ -1,8 +1,47 @@
+import processing.data.JSONObject;
+import processing.data.JSONArray;
+
 class Graph {
-    HashMap<String, Room> rooms = new HashMap<>(); // Kort til at gemme værelser
-    HashMap<String, Intersection> intersections = new HashMap<>(); // Kort til at gemme kryds
-    HashMap<String, Staircase> staircases = new HashMap<>(); // Kort til at gemme trapper
-    HashMap<String, HashMap<String, Integer>> adjacencyList = new HashMap<>(); // Adjacensliste til at gemme kanter
+    HashMap<String, Room> rooms = new HashMap<>();
+    HashMap<String, Intersection> intersections = new HashMap<>();
+    HashMap<String, Staircase> staircases = new HashMap<>();
+    HashMap<String, HashMap<String, Integer>> adjacencyList = new HashMap<>();
+
+    void loadFromJson(String filePath) {
+        JSONObject data = loadJSONObject(filePath); // Load JSON file
+        JSONArray nodes = data.getJSONArray("nodes");
+        JSONArray edges = data.getJSONArray("edges");
+
+        // Load nodes
+        for (int i = 0; i < nodes.size(); i++) {
+            JSONObject node = nodes.getJSONObject(i);
+            String type = node.getString("type");
+            String id = node.getString("id");
+            float x = node.getFloat("x");
+            float y = node.getFloat("y");
+
+            if (type.equals("Room")) {
+                int floor = node.getInt("floor");
+                addRoom(id, x, y, floor);
+            } else if (type.equals("Intersection")) {
+                int floor = node.getInt("floor");
+                addIntersection(id, x, y, floor);
+            } else if (type.equals("Staircase")) {
+                int startFloor = node.getInt("startFloor");
+                int endFloor = node.getInt("endFloor");
+                addStaircase(id, x, y, startFloor, endFloor);
+            }
+        }
+
+        // Load edges
+        for (int i = 0; i < edges.size(); i++) {
+            JSONObject edge = edges.getJSONObject(i);
+            String from = edge.getString("from");
+            String to = edge.getString("to");
+            int weight = edge.getInt("weight");
+            addEdge(from, to, weight);
+        }
+    }
 
     void addRoom(String id, float x, float y, int floor) {
         Room room = new Room(id, x, y, floor); // Opret et nyt værelse
