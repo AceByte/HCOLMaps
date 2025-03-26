@@ -1,37 +1,36 @@
-import java.util.*; // Importer Java-værktøjer
+import java.util.*;
 
 class UIController {
     ControlP5 cp5; // ControlP5-objekt til GUI-kontroller
     Graph graph; // Graph-objekt til at administrere noder og kanter
-    HCOLMaps parent; // Reference til hovedskitsen
-    String startNode = ""; // Startnode
-    String endNode = ""; // Slutnode
+    HCOLMaps parent;
+    String startNode = "";
+    String endNode = "";
 
     UIController(HCOLMaps parent, Graph graph) {
-        this.parent = parent; // Gem reference til hovedskitsen
-        this.graph = graph; // Gem reference til grafen
-        cp5 = new ControlP5(parent); // Initialiser ControlP5
+        this.parent = parent;
+        this.graph = graph;
+        cp5 = new ControlP5(parent);
 
-        // Debug: Print sorted room IDs
         String[] roomIds = getRoomIds();
 
         // Dropdown til at vælge startnode
         cp5.addDropdownList("startNodeDropdown")
-           .setPosition(40, parent.height - 200) // Position for dropdown
-           .setSize(200, 200) // Størrelse for dropdown (bredde og højde på den synlige del)
-           .setBarHeight(30) // Højde på dropdownens bar (når den er lukket)
-           .setItemHeight(25) // Højde på hver enkelt item i dropdownen
-           .setOpen(false) // Sørg for at dropdown starter som lukket
-           .setLabel("Vælg Start") // Etiket for dropdown
-           .setColorBackground(color(50)) // Baggrundsfarve (lys grå)
-           .setColorActive(color(150)) // Aktiv farve (mørkere grå)
-           .setColorForeground(color(180)) // Forgrundsfarve (mellem grå)
-           .addItems(roomIds) // Tilføj kun rum som valgmuligheder
+           .setPosition(40, parent.height - 200)
+           .setSize(200, 200)
+           .setBarHeight(30)
+           .setItemHeight(25)
+           .setOpen(false)
+           .setLabel("Vælg Start")
+           .setColorBackground(color(50))
+           .setColorActive(color(150))
+           .setColorForeground(color(180))
+           .addItems(roomIds)
            .onChange(event -> {
                int selectedIndex = (int) event.getController().getValue();
                if (selectedIndex >= 0 && selectedIndex < roomIds.length) {
                    startNode = roomIds[selectedIndex];
-                   event.getController().setCaptionLabel(startNode); // Update the dropdown caption
+                   event.getController().setCaptionLabel(startNode);
                    println("Startnode valgt: " + startNode);
                    updatePath();
                } else {
@@ -41,79 +40,80 @@ class UIController {
 
         // Dropdown til at vælge slutnode
         cp5.addDropdownList("endNodeDropdown")
-           .setPosition(260, parent.height - 200) // Position for dropdown
-           .setSize(200, 300) // Størrelse for dropdown (bredde og højde på den synlige del)
-           .setBarHeight(30) // Højde på dropdownens bar (når den er lukket)
-           .setItemHeight(25) // Højde på hver enkelt item i dropdownen
-           .setOpen(false) // Sørg for at dropdown starter som lukket
-           .setLabel("Vælg Slut") // Etiket for dropdown
-           .setColorBackground(color(50)) // Baggrundsfarve (lys grå)
-           .setColorActive(color(150)) // Aktiv farve (mørkere grå)
-           .setColorForeground(color(180)) // Forgrundsfarve (mellem grå)
-           .addItems(roomIds) // Tilføj kun rum som valgmuligheder
+           .setPosition(260, parent.height - 200)
+           .setSize(200, 300)
+           .setBarHeight(30)
+           .setItemHeight(25)
+           .setOpen(false)
+           .setLabel("Vælg Slut")
+           .setColorBackground(color(50))
+           .setColorActive(color(150))
+           .setColorForeground(color(180))
+           .addItems(roomIds)
            .onChange(event -> {
                int selectedIndex = (int) event.getController().getValue();
                if (selectedIndex >= 0 && selectedIndex < roomIds.length) {
-                   endNode = roomIds[selectedIndex];
-                   event.getController().setCaptionLabel(endNode); // Update the dropdown caption
-                   println("Slutnode valgt: " + endNode);
-                   updatePath();
+               endNode = roomIds[selectedIndex];
+               event.getController().setCaptionLabel(endNode);
+               println("Slutnode valgt: " + endNode);
+               updatePath();
                } else {
-                   println("Invalid index selected: " + selectedIndex);
+               println("Invalid index selected: " + selectedIndex);
                }
            });
 
-        // Tilføj knapper til at skifte etager
+        // knapper til at skifte etager
         cp5.addButton("floorUp")
-           .setLabel("Op") // Etiket for knappen
-           .setPosition(700, 50) // Position af knappen
-           .setSize(50, 30) // Størrelse af knappen
-           .setColorBackground(color(50)) // Baggrundsfarve (lys grå)
-           .setColorActive(color(150)) // Aktiv farve (mørkere grå)
-           .setColorForeground(color(180)) // Forgrundsfarve (mellem grå)
+           .setLabel("Op")
+           .setPosition(700, 50)
+           .setSize(50, 30)
+           .setColorBackground(color(50))
+           .setColorActive(color(150))
+           .setColorForeground(color(180))
            .onClick(event -> {
-               parent.changeFloor(parent.currentFloor + 1); // Handling ved klik
-               updateFloorLabel(); // Opdater etiket for etage
-               updateFloorButtons(); // Opdater knapperne for etageskift
+               parent.changeFloor(parent.currentFloor + 1);
+               updateFloorLabel();
+               updateFloorButtons();
            });
 
         cp5.addButton("floorDown")
-           .setLabel("Ned") // Etiket for knappen
-           .setPosition(700, 100) // Position af knappen
-           .setSize(50, 30) // Størrelse af knappen
-           .setColorBackground(color(50)) // Baggrundsfarve (lys grå)
-           .setColorActive(color(150)) // Aktiv farve (mørkere grå)
-           .setColorForeground(color(180)) // Forgrundsfarve (mellem grå)
+           .setLabel("Ned")
+           .setPosition(700, 100)
+           .setSize(50, 30)
+           .setColorBackground(color(50))
+           .setColorActive(color(150))
+           .setColorForeground(color(180))
            .onClick(event -> {
-               parent.changeFloor(parent.currentFloor - 1); // Handling ved klik
-               updateFloorLabel(); // Opdater etiket for etage
-               updateFloorButtons(); // Opdater knapperne for etageskift
+               parent.changeFloor(parent.currentFloor - 1);
+               updateFloorLabel();
+               updateFloorButtons();
            });
 
-        // Tilføj etiket for at vise den aktuelle etage
+        //  etiket for at vise den aktuelle etage
         cp5.addTextlabel("floorLabel")
-           .setText("Etage: " + parent.currentFloor) // Sæt initial tekst
-           .setPosition(700, 150) // Position af etiketten
-           .setSize(100, 30); // Størrelse af etiketten
+           .setText("Etage: " + parent.currentFloor)
+           .setPosition(700, 150)
+           .setSize(100, 30);
 
-        updateFloorButtons(); // Opdater knapperne for etageskift ved initialisering
+        updateFloorButtons();
     }
 
     void render() {
-        fill(50); // Sæt fyldfarven til mørk grå
-        textSize(16); // Sæt tekststørrelsen
-        textAlign(LEFT, CENTER); // Juster teksten til venstre
-        text("Vælg Start:", 40, parent.height - 220); // Tegn "Vælg Start" etiketten
-        text("Vælg Slut:", 260, parent.height - 220); // Tegn "Vælg Slut" etiketten
+        fill(50);
+        textSize(16);
+        textAlign(LEFT, CENTER);
+        text("Vælg Start:", 40, parent.height - 220);
+        text("Vælg Slut:", 260, parent.height - 220);
     }
 
+    // Opdaterer stien baseret på de valgte start- og slutnoder
     void updatePath() {
         if (startNode.isEmpty() || endNode.isEmpty()) {
             println("Advarsel: Start- eller slutnode er ikke valgt.");
             return;
         }
-        println("Opdaterer sti fra " + startNode + " til " + endNode); // Print start- og slutnoderne
-        parent.updatePath(startNode, endNode); // Kald updatePath i hovedklassen
+        println("Opdaterer sti fra " + startNode + " til " + endNode);
+        parent.updatePath(startNode, endNode);
     }
 
     String[] getNodeIds() {
@@ -127,11 +127,11 @@ class UIController {
     String[] getRoomIds() {
         return graph.rooms.keySet().stream()
             .sorted((a, b) -> {
-                // First compare by length (shorter strings first)
+                // Sammenlign først efter længde (kortere først)
                 if (a.length() != b.length()) {
                     return Integer.compare(a.length(), b.length());
                 }
-                // If lengths are equal, compare alphabetically
+                // Hvis længderne er ens, sammenlign alfabetisk
                 return a.compareTo(b);
             })
             .toArray(String[]::new);

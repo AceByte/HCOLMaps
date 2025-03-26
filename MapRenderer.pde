@@ -1,29 +1,28 @@
 import garciadelcastillo.dashedlines.*;
-
 class MapRenderer {
     float dist = 0;
     DashedLines dash;
-    Graph graph; // Graf objekt til at administrere noder og kanter
-    int currentFloor = 1; // Variabel til at spore den aktuelle etage
-    PApplet parent; // Reference til hovedskitsen
+    Graph graph;
+    int currentFloor = 1;
+    PApplet parent;
 
     MapRenderer(Graph graph, PApplet parent) {
-        this.graph = graph; // Initialiser grafen
-        this.parent = parent; // Gem reference til hovedskitsen
-        dash = new DashedLines(parent); // Initialiser DashedLines med PApplet
+        this.graph = graph;
+        this.parent = parent;
+        dash = new DashedLines(parent);
     }
 
     void render(List<Node> path) {
         dash.pattern(10, 10);
         // Tegn en boks rundt om kortet
-        stroke(50); // Sæt stregfarven til lidt lysere end baggrunden
-        strokeWeight(2); // Sæt stregtykkelsen
-        noFill(); // Deaktiver fyldfarve
-        rect(10, 10, width - 20, height - 270); // Tegn rektanglet med lidt polstring
+        stroke(50);
+        strokeWeight(2);
+        noFill();
+        rect(10, 10, width - 20, height - 270);
 
         // Tegn kanter (gange) på den aktuelle etage
-        stroke(150); // Sæt stregfarven til lys grå
-        strokeWeight(2); // Sæt stregtykkelsen
+        stroke(150);
+        strokeWeight(2);
         for (String from : graph.adjacencyList.keySet()) {
             Node nodeA = getNode(from); // Hent noden for fra-ID'et
             if (nodeA == null || (nodeA instanceof Room && ((Room) nodeA).floor != currentFloor) ||
@@ -38,7 +37,7 @@ class MapRenderer {
 
         // Tegn korteste sti på den aktuelle etage
         if (path != null && path.size() > 1) {
-            strokeWeight(3); // Sæt stregtykkelsen
+            strokeWeight(3);
             for (int i = 0; i < path.size() - 1; i++) {
                 Node a = path.get(i); // Hent den aktuelle node i stien
                 Node b = path.get(i + 1); // Hent den næste node i stien
@@ -59,34 +58,35 @@ class MapRenderer {
                 line(a.x, a.y, b.x, b.y); // Tegn linjen mellem noderne
 
                 stroke(0,200,255); // Sæt stregfarven til blå
-                dash.line(a.x, a.y, b.x, b.y); // Tegn linjen mellem noderne
+                dash.line(a.x, a.y, b.x, b.y); // Tegn stiplet linje mellem noderne
 
                 dash.offset(dist);
                 dist += 0.1;
 
             }
         }
+        noStroke();
 
-        noStroke(); // Fjern stregen
         // Tegn noder (Værelser og Trapper) på den aktuelle etage
-        fill(200); // Sæt fyldfarven til lys grå
+        fill(200);
         for (Room room : graph.rooms.values()) {
             if (room.floor != currentFloor) continue;
             ellipse(room.x, room.y, 20, 20); // Tegn værelser som cirkler
-            fill(200); // Sæt fyldfarven til lys grå
-            textAlign(CENTER, CENTER); // Sæt tekstjusteringen
+            fill(200);
+            textAlign(CENTER, CENTER);
             text(room.id, room.x, room.y - 15); // Tegn værelsets ID
         }
 
         for (Staircase staircase : graph.staircases.values()) {
             if (staircase.startFloor != currentFloor && staircase.endFloor != currentFloor) continue;
             rect(staircase.x - 10, staircase.y - 10, 20, 20); // Tegn trapper som firkanter
-            fill(200); // Sæt fyldfarven til lys grå
-            textAlign(CENTER, CENTER); // Sæt tekstjusteringen
+            fill(200);
+            textAlign(CENTER, CENTER);
             text(staircase.id, staircase.x, staircase.y - 15); // Tegn trappens ID
         }
     }
 
+    // Hjælpemetode til at hente en node fra grafen baseret på ID
     Node getNode(String id) {
         if (graph.rooms.containsKey(id)) return graph.rooms.get(id); // Returner værelset hvis ID'et matcher
         if (graph.intersections.containsKey(id)) return graph.intersections.get(id); // Returner krydset hvis ID'et matcher

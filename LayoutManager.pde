@@ -3,6 +3,5 @@ class LayoutManager {
 
     LayoutManager(Graph graph) {
         this.graph = graph;
-        // Node and edge creation is now handled by the JSON loader.
     }
 }

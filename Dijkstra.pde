@@ -1,53 +1,53 @@
-import java.util.*; // Importer Java-værktøjer
+import java.util.*;
 
 class Dijkstra {
-    Graph graph; // Graf-objekt til at administrere noder og kanter
+    Graph graph;
 
     Dijkstra(Graph graph) {
-        this.graph = graph; // Initialiser grafen
+        this.graph = graph;
     }
 
     List<Node> findShortestPath(String start, String end) {
-        return dijkstra(graph, start, end); // Find den korteste sti ved hjælp af Dijkstra's algoritme
+        return dijkstra(graph, start, end);
     }
 
     List<Node> dijkstra(Graph graph, String start, String end) {
-        Map<String, Integer> distances = new HashMap<>(); // Kort til at gemme afstande fra startnoden
-        Map<String, String> previous = new HashMap<>(); // Kort til at gemme den forrige node i stien
-        PriorityQueue<String> pq = new PriorityQueue<>(Comparator.comparingInt(distances::get)); // Prioritetskø for noder, der skal udforskes
+        Map<String, Integer> distances = new HashMap<>();
+        Map<String, String> previous = new HashMap<>();
+        PriorityQueue<String> pq = new PriorityQueue<>(Comparator.comparingInt(distances::get));
 
-        HashMap<String, Node> allNodes = graph.getAllNodes(); // Hent alle noder i grafen
+        HashMap<String, Node> allNodes = graph.getAllNodes();
         for (String node : allNodes.keySet()) {
-            distances.put(node, Integer.MAX_VALUE); // Initialiser afstande til uendelig
-            previous.put(node, null); // Initialiser forrige noder til null
+            distances.put(node, Integer.MAX_VALUE);
+            previous.put(node, null);
         }
-        distances.put(start, 0); // Sæt afstanden til startnoden til 0
-        pq.add(start); // Tilføj startnoden til prioritetskøen
+        distances.put(start, 0);
+        pq.add(start);
 
         while (!pq.isEmpty()) {
-            String current = pq.poll(); // Hent noden med den mindste afstand
+            String current = pq.poll();
             if (current.equals(end)) {
-                break; // Stop, hvis vi har nået slutnoden
+                break;
             }
 
-            Map<String, Integer> neighbors = graph.adjacencyList.get(current); // Hent naboerne til den aktuelle node
+            Map<String, Integer> neighbors = graph.adjacencyList.get(current);
             if (neighbors != null) {
                 for (String neighbor : neighbors.keySet()) {
-                    int newDist = distances.get(current) + neighbors.get(neighbor); // Beregn den nye afstand til naboen
+                    int newDist = distances.get(current) + neighbors.get(neighbor);
                     if (newDist < distances.get(neighbor)) {
-                        distances.put(neighbor, newDist); // Opdater afstanden til naboen
-                        previous.put(neighbor, current); // Opdater den forrige node for naboen
-                        pq.add(neighbor); // Tilføj naboen til prioritetskøen
+                        distances.put(neighbor, newDist);
+                        previous.put(neighbor, current);
+                        pq.add(neighbor);
                     }
                 }
             }
         }
 
-        List<Node> path = new ArrayList<>(); // Liste til at gemme stien
+        List<Node> path = new ArrayList<>();
         for (String at = end; at != null; at = previous.get(at)) {
-            path.add(allNodes.get(at)); // Tilføj noderne i stien til listen
+            path.add(allNodes.get(at));
         }
-        Collections.reverse(path); // Vend stien for at få den korrekte rækkefølge
-        return path; // Returner stien
+        Collections.reverse(path);
+        return path;
     }
 }
