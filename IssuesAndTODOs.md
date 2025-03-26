@@ -2,13 +2,7 @@
 
 ## Issues
 
-1. **Dropdown List Selection Issue**
-
-   - The application does not choose the correct point from the dropdown list.
-
-2. **No Error Handling for Invalid Nodes**
-
-   - The `updatePath` method does not handle cases where the start or end nodes are invalid or do not exist.
+### 🎉 No Known Issues!
 
 ## TODOs
 

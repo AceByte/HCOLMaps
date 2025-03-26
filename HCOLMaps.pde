@@ -24,10 +24,25 @@ void draw() {
 }
 
 void updatePath(String start, String end) {
+    // Check if the start and end nodes exist in the graph
+    if (!layout.getGraph().getAllNodes().containsKey(start)) {
+        println("Fejl: Startnoden '" + start + "' findes ikke i grafen.");
+        return;
+    }
+    if (!layout.getGraph().getAllNodes().containsKey(end)) {
+        println("Fejl: Slutnoden '" + end + "' findes ikke i grafen.");
+        return;
+    }
+
     println("Beregner sti fra " + start + " til " + end); // Udskriv start- og slutnoderne
     Dijkstra dijkstra = new Dijkstra(layout.getGraph()); // Initialiser Dijkstra's algoritme med grafen
     path = dijkstra.findShortestPath(start, end); // Find den korteste sti
-    println("Aktuel sti: " + path); // Udskriv den aktuelle sti
+
+    if (path == null || path.isEmpty()) {
+        println("Fejl: Ingen sti fundet mellem '" + start + "' og '" + end + "'.");
+    } else {
+        println("Aktuel sti: " + path); // Udskriv den aktuelle sti
+    }
 }
 
 void changeFloor(int floor) {
