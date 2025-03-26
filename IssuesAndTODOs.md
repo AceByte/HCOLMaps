@@ -2,7 +2,8 @@
 
 ## Issues
 
-### 🎉 No Known Issues!
+AUTOMATE WEIGHT CALCULATION
+PLEASEEEEEEEE
 
 ## TODOs
 
