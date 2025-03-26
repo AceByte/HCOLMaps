@@ -4,82 +4,63 @@ class UIController {
     ControlP5 cp5; // ControlP5-objekt til GUI-kontroller
     Graph graph; // Graph-objekt til at administrere noder og kanter
     HCOLMaps parent; // Reference til hovedskitsen
-    String startNode = "A"; // Standard startnode
-    String endNode = "E"; // Standard slutnode
-
-    // Manuelt gemme elementer til dropdowns
-    String[] startNodeItems; // Array til at gemme startnode-elementer
-    String[] endNodeItems; // Array til at gemme slutnode-elementer
+    String startNode = ""; // Startnode
+    String endNode = ""; // Slutnode
 
     UIController(HCOLMaps parent, Graph graph) {
         this.parent = parent; // Gem reference til hovedskitsen
         this.graph = graph; // Gem reference til grafen
         cp5 = new ControlP5(parent); // Initialiser ControlP5
 
-        // Hent noderne fra grafen, ekskluderer kryds og sorterer alfabetisk
-        startNodeItems = graph.getAllNodes().values().stream()
-            .filter(node -> !(node instanceof Intersection))
-            .map(node -> node.id)
-            .sorted()
-            .toArray(String[]::new);
-        endNodeItems = startNodeItems.clone(); // Klon startnode-elementerne til slutnode-elementerne
+        // Debug: Print sorted room IDs
+        String[] roomIds = getRoomIds();
 
-        // Dropdown til startlokation
-        cp5.addScrollableList("startDropdown")
-           .setPosition(20, parent.height - 150) // Sæt positionen af dropdown
-           .setSize(150, 100) // Sæt størrelsen af dropdown
-           .addItems(startNodeItems) // Tilføj elementer til dropdown
-           .setOpen(false) // Hold dropdown lukket efter valg
+        // Dropdown til at vælge startnode
+        cp5.addDropdownList("startNodeDropdown")
+           .setPosition(40, parent.height - 200) // Position for dropdown
+           .setSize(200, 200) // Størrelse for dropdown (bredde og højde på den synlige del)
+           .setBarHeight(30) // Højde på dropdownens bar (når den er lukket)
+           .setItemHeight(25) // Højde på hver enkelt item i dropdownen
+           .setOpen(false) // Sørg for at dropdown starter som lukket
+           .setLabel("Vælg Start") // Etiket for dropdown
+           .setColorBackground(color(50)) // Baggrundsfarve (lys grå)
+           .setColorActive(color(150)) // Aktiv farve (mørkere grå)
+           .setColorForeground(color(180)) // Forgrundsfarve (mellem grå)
+           .addItems(roomIds) // Tilføj kun rum som valgmuligheder
            .onChange(event -> {
-               // Fang den valgte startnode-værdi
-               String selectedStartNode = event.getController().getValueLabel().getText();
-               println("Dropdown startnode valgt: " + selectedStartNode);
-
-               // Opdater startnode hvis den er gyldig
-               if (selectedStartNode != null && !selectedStartNode.isEmpty()) {
-                   startNode = selectedStartNode;
-                   println("Startnode opdateret til: " + startNode);
+               int selectedIndex = (int) event.getController().getValue();
+               if (selectedIndex >= 0 && selectedIndex < roomIds.length) {
+                   startNode = roomIds[selectedIndex];
+                   event.getController().setCaptionLabel(startNode); // Update the dropdown caption
+                   println("Startnode valgt: " + startNode);
+                   updatePath();
                } else {
-                   println("Ugyldig startnode valgt");
+                   println("Invalid index selected: " + selectedIndex);
                }
-               updatePath(); // Opdater stien
            });
 
-        // Dropdown til slutlokation
-        cp5.addScrollableList("endDropdown")
-           .setPosition(200, parent.height - 150) // Sæt positionen af dropdown
-           .setSize(150, 100) // Sæt størrelsen af dropdown
-           .addItems(endNodeItems) // Tilføj elementer til dropdown
-           .setOpen(false) // Hold dropdown lukket efter valg
+        // Dropdown til at vælge slutnode
+        cp5.addDropdownList("endNodeDropdown")
+           .setPosition(260, parent.height - 200) // Position for dropdown
+           .setSize(200, 300) // Størrelse for dropdown (bredde og højde på den synlige del)
+           .setBarHeight(30) // Højde på dropdownens bar (når den er lukket)
+           .setItemHeight(25) // Højde på hver enkelt item i dropdownen
+           .setOpen(false) // Sørg for at dropdown starter som lukket
+           .setLabel("Vælg Slut") // Etiket for dropdown
+           .setColorBackground(color(50)) // Baggrundsfarve (lys grå)
+           .setColorActive(color(150)) // Aktiv farve (mørkere grå)
+           .setColorForeground(color(180)) // Forgrundsfarve (mellem grå)
+           .addItems(roomIds) // Tilføj kun rum som valgmuligheder
            .onChange(event -> {
-               // Fang den valgte slutnode-værdi
-               String selectedEndNode = event.getController().getValueLabel().getText();
-               println("Dropdown slutnode valgt: " + selectedEndNode);
-
-               // Opdater slutnode hvis den er gyldig
-               if (selectedEndNode != null && !selectedEndNode.isEmpty()) {
-                   endNode = selectedEndNode;
-                   println("Slutnode opdateret til: " + endNode);
+               int selectedIndex = (int) event.getController().getValue();
+               if (selectedIndex >= 0 && selectedIndex < roomIds.length) {
+                   endNode = roomIds[selectedIndex];
+                   event.getController().setCaptionLabel(endNode); // Update the dropdown caption
+                   println("Slutnode valgt: " + endNode);
+                   updatePath();
                } else {
-                   println("Ugyldig slutnode valgt");
+                   println("Invalid index selected: " + selectedIndex);
                }
-               updatePath(); // Opdater stien
-           });
-
-        // Sæt initiale værdier for start- og slutdropdowns ved at sætte værdien i listen.
-        cp5.get(ScrollableList.class, "startDropdown").setStringValue(startNode);
-        cp5.get(ScrollableList.class, "endDropdown").setStringValue(endNode);
-
-        // Sørg for at dropdowns viser den rigtige valgte værdi med det samme
-        updateDropdownSelection(); // Opdater dropdown-valget
-
-        // Knap til at beregne ny sti
-        cp5.addButton("calculatePathButton")
-           .setLabel("Beregn Sti") // Sæt etiketten for knappen
-           .setPosition(380, parent.height - 150) // Sæt positionen af knappen
-           .setSize(150, 30) // Sæt størrelsen af knappen
-           .onClick(event -> {
-               updatePath(); // Sørg for at stien opdateres efter knapklik
            });
 
         // Tilføj knapper til at skifte etager
@@ -87,6 +68,9 @@ class UIController {
            .setLabel("Op") // Etiket for knappen
            .setPosition(700, 50) // Position af knappen
            .setSize(50, 30) // Størrelse af knappen
+           .setColorBackground(color(50)) // Baggrundsfarve (lys grå)
+           .setColorActive(color(150)) // Aktiv farve (mørkere grå)
+           .setColorForeground(color(180)) // Forgrundsfarve (mellem grå)
            .onClick(event -> {
                parent.changeFloor(parent.currentFloor + 1); // Handling ved klik
                updateFloorLabel(); // Opdater etiket for etage
@@ -97,6 +81,9 @@ class UIController {
            .setLabel("Ned") // Etiket for knappen
            .setPosition(700, 100) // Position af knappen
            .setSize(50, 30) // Størrelse af knappen
+           .setColorBackground(color(50)) // Baggrundsfarve (lys grå)
+           .setColorActive(color(150)) // Aktiv farve (mørkere grå)
+           .setColorForeground(color(180)) // Forgrundsfarve (mellem grå)
            .onClick(event -> {
                parent.changeFloor(parent.currentFloor - 1); // Handling ved klik
                updateFloorLabel(); // Opdater etiket for etage
@@ -113,28 +100,41 @@ class UIController {
     }
 
     void render() {
-        fill(0); // Sæt fyldfarven til sort
-        textSize(14); // Sæt tekststørrelsen
-        text("Vælg Start:", 40, parent.height - 160); // Tegn "Vælg Start" etiketten
-        text("Vælg Slut:", 220, parent.height - 160); // Tegn "Vælg Slut" etiketten
+        fill(50); // Sæt fyldfarven til mørk grå
+        textSize(16); // Sæt tekststørrelsen
+        textAlign(LEFT, CENTER); // Juster teksten til venstre
+        text("Vælg Start:", 40, parent.height - 220); // Tegn "Vælg Start" etiketten
+        text("Vælg Slut:", 260, parent.height - 220); // Tegn "Vælg Slut" etiketten
     }
 
     void updatePath() {
-        // Hent de aktuelle værdier fra dropdowns
-        startNode = cp5.get(ScrollableList.class, "startDropdown").getValueLabel().getText();
-        endNode = cp5.get(ScrollableList.class, "endDropdown").getValueLabel().getText();
-
+        if (startNode.isEmpty() || endNode.isEmpty()) {
+            println("Advarsel: Start- eller slutnode er ikke valgt.");
+            return;
+        }
         println("Opdaterer sti fra " + startNode + " til " + endNode); // Print start- og slutnoderne
         parent.updatePath(startNode, endNode); // Kald updatePath i hovedklassen
-
-        updateDropdownSelection(); // Opdater dropdown-valget
     }
 
-    // Sørger for at dropdowns afspejler det korrekte valg
-    private void updateDropdownSelection() {
-        // Sørg for at dropdowns afspejler de valgte værdier med det samme
-        cp5.get(ScrollableList.class, "startDropdown").setStringValue(startNode);
-        cp5.get(ScrollableList.class, "endDropdown").setStringValue(endNode);
+    String[] getNodeIds() {
+        // Hent alle node-ID'er fra grafen og sorter dem alfabetisk
+        return graph.getAllNodes().keySet().stream()
+            .sorted()
+            .toArray(String[]::new);
+    }
+
+    // Hent kun ID'er for rum ("rooms") og sorter dem med single-letter IDs først
+    String[] getRoomIds() {
+        return graph.rooms.keySet().stream()
+            .sorted((a, b) -> {
+                // First compare by length (shorter strings first)
+                if (a.length() != b.length()) {
+                    return Integer.compare(a.length(), b.length());
+                }
+                // If lengths are equal, compare alphabetically
+                return a.compareTo(b);
+            })
+            .toArray(String[]::new);
     }
 
     // Opdaterer etiketten for den aktuelle etage

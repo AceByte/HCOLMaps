@@ -4,6 +4,7 @@ import java.util.*; // Importer Java-værktøjer
 Layout layout; // Layout-objekt til at administrere grafens layout
 MapRenderer mapRenderer; // MapRenderer-objekt til at gengive grafen
 UIController uiController; // UIController-objekt til at administrere UI
+DashedLines dash;
 List<Node> path = new ArrayList<>(); // Liste til at gemme den korteste sti
 ControlP5 cp5; // ControlP5-objekt til GUI-kontroller
 int currentFloor = 1; // Variabel til at spore den aktuelle etage
@@ -11,12 +12,9 @@ int currentFloor = 1; // Variabel til at spore den aktuelle etage
 void setup() {
     size(800, 600); // Sæt størrelsen på vinduet
     layout = new Layout(); // Initialiser layoutet
-    mapRenderer = new MapRenderer(layout.getGraph()); // Initialiser map renderer med grafen
+    mapRenderer = new MapRenderer(layout.getGraph(), this); // Initialiser map renderer med grafen
     uiController = new UIController(this, layout.getGraph()); // Initialiser UI controller med grafen
     cp5 = new ControlP5(this); // Initialiser ControlP5
-
-    // Standard sti beregning
-    updatePath("A", "CC"); // Beregn standardstien fra node A til node E
 }
 
 void draw() {

@@ -1,12 +1,20 @@
+import garciadelcastillo.dashedlines.*;
+
 class MapRenderer {
+    float dist = 0;
+    DashedLines dash;
     Graph graph; // Graf objekt til at administrere noder og kanter
     int currentFloor = 1; // Variabel til at spore den aktuelle etage
+    PApplet parent; // Reference til hovedskitsen
 
-    MapRenderer(Graph graph) {
+    MapRenderer(Graph graph, PApplet parent) {
         this.graph = graph; // Initialiser grafen
+        this.parent = parent; // Gem reference til hovedskitsen
+        dash = new DashedLines(parent); // Initialiser DashedLines med PApplet
     }
 
     void render(List<Node> path) {
+        dash.pattern(10, 10);
         // Tegn en boks rundt om kortet
         stroke(50); // Sæt stregfarven til lidt lysere end baggrunden
         strokeWeight(2); // Sæt stregtykkelsen
@@ -30,7 +38,6 @@ class MapRenderer {
 
         // Tegn korteste sti på den aktuelle etage
         if (path != null && path.size() > 1) {
-            stroke(0,100,255); // Sæt stregfarven til blå
             strokeWeight(3); // Sæt stregtykkelsen
             for (int i = 0; i < path.size() - 1; i++) {
                 Node a = path.get(i); // Hent den aktuelle node i stien
@@ -48,7 +55,15 @@ class MapRenderer {
                     (b instanceof Intersection && ((Intersection) b).floor != currentFloor)) {
                     continue;
                 }
+                stroke(0,100,255); // Sæt stregfarven til blå
                 line(a.x, a.y, b.x, b.y); // Tegn linjen mellem noderne
+
+                stroke(0,200,255); // Sæt stregfarven til blå
+                dash.line(a.x, a.y, b.x, b.y); // Tegn linjen mellem noderne
+
+                dash.offset(dist);
+                dist += 0.1;
+
             }
         }
 
