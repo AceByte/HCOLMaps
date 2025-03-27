@@ -41,7 +41,7 @@ class UIController {
         // Dropdown til at vælge slutnode
         cp5.addDropdownList("endNodeDropdown")
            .setPosition(260, parent.height - 200)
-           .setSize(200, 300)
+           .setSize(200, 200)
            .setBarHeight(30)
            .setItemHeight(25)
            .setOpen(false)
@@ -99,7 +99,7 @@ class UIController {
     }
 
     void render() {
-        fill(50);
+        fill(200);
         textSize(16);
         textAlign(LEFT, CENTER);
         text("Vælg Start:", 40, parent.height - 220);

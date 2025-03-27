@@ -54,35 +54,70 @@ class MapRenderer {
                     (b instanceof Intersection && ((Intersection) b).floor != currentFloor)) {
                     continue;
                 }
-                stroke(0,100,255); // Sæt stregfarven til blå
+
+                // Highlight rooms and stairs that the line goes through
+                if (a instanceof Room && ((Room) a).floor == currentFloor) {
+                    fill(0, 100, 255); // Sæt farven til blå
+                    ellipse(a.x, a.y, 20, 20); // Tegn værelset som en cirkel
+                }
+                if (b instanceof Room && ((Room) b).floor == currentFloor) {
+                    fill(0, 100, 255); // Sæt farven til blå
+                    ellipse(b.x, b.y, 20, 20); // Tegn værelset som en cirkel
+                }
+                if (a instanceof Staircase && (((Staircase) a).startFloor == currentFloor || ((Staircase) a).endFloor == currentFloor)) {
+                    fill(0, 100, 255); // Sæt farven til blå
+                    rect(a.x - 10, a.y - 10, 20, 20); // Tegn trappen som en firkant
+                }
+                if (b instanceof Staircase && (((Staircase) b).startFloor == currentFloor || ((Staircase) b).endFloor == currentFloor)) {
+                    fill(0, 100, 255); // Sæt farven til blå
+                    rect(b.x - 10, b.y - 10, 20, 20); // Tegn trappen som en firkant
+                }
+
+                stroke(0, 100, 255); // Sæt stregfarven til blå
                 line(a.x, a.y, b.x, b.y); // Tegn linjen mellem noderne
 
-                stroke(0,200,255); // Sæt stregfarven til blå
+                stroke(0, 200, 255); // Sæt stregfarven til blå
+                dash.offset(dist); // Brug den aktuelle offset
                 dash.line(a.x, a.y, b.x, b.y); // Tegn stiplet linje mellem noderne
 
-                dash.offset(dist);
-                dist += 0.1;
-
+                dist += 0.1; // Nulstil dist for at gøre det konsistent
             }
         }
         noStroke();
 
-        // Tegn noder (Værelser og Trapper) på den aktuelle etage
+        // Draw all rooms (gray circles and labels)
         fill(200);
         for (Room room : graph.rooms.values()) {
             if (room.floor != currentFloor) continue;
-            ellipse(room.x, room.y, 20, 20); // Tegn værelser som cirkler
+            ellipse(room.x, room.y, 20, 20); // Draw rooms as gray circles
             fill(200);
             textAlign(CENTER, CENTER);
-            text(room.id, room.x, room.y - 15); // Tegn værelsets ID
+            text(room.id, room.x, room.y - 15); // Draw room ID
         }
 
+        // Draw all staircases (gray rectangles and labels)
         for (Staircase staircase : graph.staircases.values()) {
             if (staircase.startFloor != currentFloor && staircase.endFloor != currentFloor) continue;
-            rect(staircase.x - 10, staircase.y - 10, 20, 20); // Tegn trapper som firkanter
+            rect(staircase.x - 10, staircase.y - 10, 20, 20); // Draw staircases as gray rectangles
             fill(200);
             textAlign(CENTER, CENTER);
-            text(staircase.id, staircase.x, staircase.y - 15); // Tegn trappens ID
+            text(staircase.id, staircase.x, staircase.y - 15); // Draw staircase ID
+        }
+
+        // Highlight rooms and staircases in the path (blue circles and rectangles)
+        if (path != null && path.size() > 1) {
+            for (int i = 0; i < path.size(); i++) {
+                Node node = path.get(i);
+
+                if (node instanceof Room && ((Room) node).floor == currentFloor) {
+                    fill(0, 100, 255); // Set color to blue
+                    ellipse(node.x, node.y, 20, 20); // Draw the room as a blue circle
+                }
+                if (node instanceof Staircase && (((Staircase) node).startFloor == currentFloor || ((Staircase) node).endFloor == currentFloor)) {
+                    fill(0, 100, 255); // Set color to blue
+                    rect(node.x - 10, node.y - 10, 20, 20); // Draw the staircase as a blue rectangle
+                }
+            }
         }
     }
 
