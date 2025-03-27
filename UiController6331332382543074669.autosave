@@ -34,7 +34,7 @@ class UIController {
                    println("Startnode valgt: " + startNode);
                    updatePath();
                } else {
-                   println("Invalid index selected: " + selectedIndex);
+                   println("Ugyldigt indeks valgt: " + selectedIndex);
                }
            });
 
@@ -59,11 +59,11 @@ class UIController {
                println("Slutnode valgt: " + endNode);
                updatePath();
                } else {
-               println("Invalid index selected: " + selectedIndex);
+               println("Ugyldigt indeks valgt: " + selectedIndex);
                }
            });
 
-        // knapper til at skifte etager
+        // Knapper til at skifte etager
         cp5.addButton("floorUp")
            .setLabel("Op")
            .setPosition(700, 50)
@@ -90,7 +90,7 @@ class UIController {
                updateFloorButtons();
            });
 
-        //  etiket for at vise den aktuelle etage
+        // Etiket for at vise den aktuelle etage
         cp5.addTextlabel("floorLabel")
            .setText("Etage: " + parent.currentFloor)
            .setPosition(700, 150)

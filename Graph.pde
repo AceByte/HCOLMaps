@@ -1,6 +1,5 @@
 import processing.data.JSONObject;
 import processing.data.JSONArray;
-//im finna be real witchu chief, I don't know what this is
 
 class Graph {
     HashMap<String, Room> rooms = new HashMap<>();
@@ -9,11 +8,11 @@ class Graph {
     HashMap<String, HashMap<String, Integer>> adjacencyList = new HashMap<>();
 
     void loadFromJson(String filePath) {
-        JSONObject data = loadJSONObject(filePath); // Load JSON file
+        JSONObject data = loadJSONObject(filePath); // Indlæs JSON-fil
         JSONArray nodes = data.getJSONArray("nodes");
         JSONArray edges = data.getJSONArray("edges");
 
-        // Load nodes
+        // Indlæs noder
         for (int i = 0; i < nodes.size(); i++) {
             JSONObject node = nodes.getJSONObject(i);
             String type = node.getString("type");
@@ -34,12 +33,12 @@ class Graph {
             }
         }
 
-        // Load edges
+        // Indlæs kanter
         for (int i = 0; i < edges.size(); i++) {
             JSONObject edge = edges.getJSONObject(i);
             String from = edge.getString("from");
             String to = edge.getString("to");
-            addEdge(from, to);
+            addEdge(from, to); // Ignorer eventuelle foruddefinerede vægte
         }
     }
 
@@ -70,7 +69,8 @@ class Graph {
             return;
         }
 
-        float distance = dist(nodeA.x, nodeA.y, nodeB.x, nodeB.y); // Calculate Euclidean distance
+        // Beregn vægt baseret på pixeldistancen mellem noderne
+        int weight = (int) dist(nodeA.x, nodeA.y, nodeB.x, nodeB.y);
 
         if (!adjacencyList.containsKey(from)) {
             adjacencyList.put(from, new HashMap<>());
@@ -78,8 +78,8 @@ class Graph {
         if (!adjacencyList.containsKey(to)) {
             adjacencyList.put(to, new HashMap<>());
         }
-        adjacencyList.get(from).put(to, (int) distance);
-        adjacencyList.get(to).put(from, (int) distance);
+        adjacencyList.get(from).put(to, weight);
+        adjacencyList.get(to).put(from, weight);
     }
 
     HashMap<String, Node> getAllNodes() {
@@ -90,7 +90,7 @@ class Graph {
         return allNodes; // Returner kortet over alle noder
     }
 
-    // Mimumum og maximum etage
+    // Minimum og maksimum etage
     int getMinFloor() {
         int minFloor = Integer.MAX_VALUE;
         for (Room room : rooms.values()) {

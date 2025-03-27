@@ -55,7 +55,7 @@ class MapRenderer {
                     continue;
                 }
 
-                // Highlight rooms and stairs that the line goes through
+                // Fremhæv værelser og trapper, som linjen går igennem
                 if (a instanceof Room && ((Room) a).floor == currentFloor) {
                     fill(0, 100, 255); // Sæt farven til blå
                     ellipse(a.x, a.y, 20, 20); // Tegn værelset som en cirkel
@@ -85,37 +85,37 @@ class MapRenderer {
         }
         noStroke();
 
-        // Draw all rooms (gray circles and labels)
+        // Tegn alle værelser (grå cirkler og etiketter)
         fill(200);
         for (Room room : graph.rooms.values()) {
             if (room.floor != currentFloor) continue;
-            ellipse(room.x, room.y, 20, 20); // Draw rooms as gray circles
+            ellipse(room.x, room.y, 20, 20); // Tegn værelser som grå cirkler
             fill(200);
             textAlign(CENTER, CENTER);
-            text(room.id, room.x, room.y - 15); // Draw room ID
+            text(room.id, room.x, room.y - 15); // Tegn værelse-ID
         }
 
-        // Draw all staircases (gray rectangles and labels)
+        // Tegn alle trapper (grå rektangler og etiketter)
         for (Staircase staircase : graph.staircases.values()) {
             if (staircase.startFloor != currentFloor && staircase.endFloor != currentFloor) continue;
-            rect(staircase.x - 10, staircase.y - 10, 20, 20); // Draw staircases as gray rectangles
+            rect(staircase.x - 10, staircase.y - 10, 20, 20); // Tegn trapper som grå rektangler
             fill(200);
             textAlign(CENTER, CENTER);
-            text(staircase.id, staircase.x, staircase.y - 15); // Draw staircase ID
+            text(staircase.id, staircase.x, staircase.y - 15); // Tegn trappe-ID
         }
 
-        // Highlight rooms and staircases in the path (blue circles and rectangles)
+        // Fremhæv værelser og trapper i stien (blå cirkler og rektangler)
         if (path != null && path.size() > 1) {
             for (int i = 0; i < path.size(); i++) {
                 Node node = path.get(i);
 
                 if (node instanceof Room && ((Room) node).floor == currentFloor) {
-                    fill(0, 100, 255); // Set color to blue
-                    ellipse(node.x, node.y, 20, 20); // Draw the room as a blue circle
+                    fill(0, 100, 255); // Sæt farven til blå
+                    ellipse(node.x, node.y, 20, 20); // Tegn værelset som en blå cirkel
                 }
                 if (node instanceof Staircase && (((Staircase) node).startFloor == currentFloor || ((Staircase) node).endFloor == currentFloor)) {
-                    fill(0, 100, 255); // Set color to blue
-                    rect(node.x - 10, node.y - 10, 20, 20); // Draw the staircase as a blue rectangle
+                    fill(0, 100, 255); // Sæt farven til blå
+                    rect(node.x - 10, node.y - 10, 20, 20); // Tegn trappen som en blå rektangel
                 }
             }
         }
