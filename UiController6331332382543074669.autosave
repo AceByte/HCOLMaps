@@ -13,7 +13,6 @@ class UIController {
         cp5 = new ControlP5(parent);
 
         String[] roomIds = getRoomIds();
-        cp5.setFont(createFont("Arial", 14, true));
 
         // Dropdown til at vælge startnode
         cp5.addDropdownList("startNodeDropdown")
@@ -45,6 +44,7 @@ class UIController {
            .setSize(200, 200)
            .setBarHeight(30)
            .setItemHeight(25)
+           .setFont(createFont("Arial", 14, true))
            .setOpen(false)
            .setLabel("Slut")
            .setColorBackground(color(50))
@@ -114,23 +114,7 @@ class UIController {
             return;
         }
         println("Opdaterer sti fra " + startNode + " til " + endNode);
-
         parent.updatePath(startNode, endNode);
-
-        // Calculate and print the total weight of the path
-        List<Node> path = parent.path;
-        if (path != null && path.size() > 1) {
-            int totalWeight = 0;
-            for (int i = 0; i < path.size() - 1; i++) {
-                Node current = path.get(i);
-                Node next = path.get(i + 1);
-                int weight = graph.adjacencyList.get(current.id).get(next.id);
-                totalWeight += weight;
-            }
-            println("Total weight of the path: " + totalWeight);
-        } else {
-            println("No valid path found.");
-        }
     }
 
     String[] getNodeIds() {

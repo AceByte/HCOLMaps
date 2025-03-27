@@ -39,8 +39,7 @@ class Graph {
             JSONObject edge = edges.getJSONObject(i);
             String from = edge.getString("from");
             String to = edge.getString("to");
-            int weight = edge.getInt("weight");
-            addEdge(from, to, weight);
+            addEdge(from, to);
         }
     }
 
@@ -62,15 +61,25 @@ class Graph {
         adjacencyList.put(id, new HashMap<>()); // Initialiser adjacenslisten for trappen
     }
 
-    void addEdge(String from, String to, int weight) {
+    void addEdge(String from, String to) {
+        Node nodeA = getAllNodes().get(from);
+        Node nodeB = getAllNodes().get(to);
+
+        if (nodeA == null || nodeB == null) {
+            println("Error: One or both nodes not found for edge: " + from + " -> " + to);
+            return;
+        }
+
+        float distance = dist(nodeA.x, nodeA.y, nodeB.x, nodeB.y); // Calculate Euclidean distance
+
         if (!adjacencyList.containsKey(from)) {
-            adjacencyList.put(from, new HashMap<>()); // Initialiser adjacenslisten for fra-noden, hvis den ikke er til stede
+            adjacencyList.put(from, new HashMap<>());
         }
         if (!adjacencyList.containsKey(to)) {
-            adjacencyList.put(to, new HashMap<>()); // Initialiser adjacenslisten for til-noden, hvis den ikke er til stede
+            adjacencyList.put(to, new HashMap<>());
         }
-        adjacencyList.get(from).put(to, weight); // Tilføj kanten fra fra-noden til til-noden
-        adjacencyList.get(to).put(from, weight); // Tilføj kanten fra til-noden til fra-noden
+        adjacencyList.get(from).put(to, (int) distance);
+        adjacencyList.get(to).put(from, (int) distance);
     }
 
     HashMap<String, Node> getAllNodes() {
