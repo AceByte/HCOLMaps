@@ -40,6 +40,7 @@
     { "type": "Intersection", "id": "I5", "x": 650, "y": 150, "floor": 1 },
     { "type": "Intersection", "id": "I6", "x": 550, "y": 300, "floor": 1 },
     { "type": "Intersection", "id": "I7", "x": 550, "y": 100, "floor": 1 },
+
     { "type": "Intersection", "id": "I8", "x": 50, "y": 150, "floor": 2 },
     { "type": "Intersection", "id": "I9", "x": 250, "y": 150, "floor": 2 },
     { "type": "Intersection", "id": "I10", "x": 450, "y": 150, "floor": 2 },
@@ -47,6 +48,7 @@
     { "type": "Intersection", "id": "I12", "x": 650, "y": 150, "floor": 2 },
     { "type": "Intersection", "id": "I13", "x": 550, "y": 300, "floor": 2 },
     { "type": "Intersection", "id": "I14", "x": 550, "y": 250, "floor": 2 },
+
     { "type": "Intersection", "id": "I15", "x": 50, "y": 150, "floor": 3 },
     { "type": "Intersection", "id": "I16", "x": 250, "y": 150, "floor": 3 },
     { "type": "Intersection", "id": "I17", "x": 450, "y": 150, "floor": 3 },
@@ -54,6 +56,7 @@
     { "type": "Intersection", "id": "I19", "x": 650, "y": 150, "floor": 3 },
     { "type": "Intersection", "id": "I20", "x": 550, "y": 300, "floor": 3 },
     { "type": "Intersection", "id": "I21", "x": 550, "y": 250, "floor": 3 },
+
     { "type": "Staircase", "id": "S1", "x": 550, "y": 100, "startFloor": 1, "endFloor": 2 },
     { "type": "Staircase", "id": "S2", "x": 550, "y": 250, "startFloor": 2, "endFloor": 3 }
   ],
