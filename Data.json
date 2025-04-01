@@ -10,6 +10,7 @@
     { "type": "Room", "id": "H", "x": 50, "y": 250, "floor": 1 },
     { "type": "Room", "id": "I", "x": 450, "y": 300, "floor": 1 },
     { "type": "Room", "id": "J", "x": 650, "y": 300, "floor": 1 },
+
     { "type": "Room", "id": "K", "x": 50, "y": 50, "floor": 2 },
     { "type": "Room", "id": "L", "x": 250, "y": 50, "floor": 2 },
     { "type": "Room", "id": "M", "x": 450, "y": 50, "floor": 2 },
@@ -20,6 +21,7 @@
     { "type": "Room", "id": "R", "x": 50, "y": 250, "floor": 2 },
     { "type": "Room", "id": "S", "x": 450, "y": 300, "floor": 2 },
     { "type": "Room", "id": "T", "x": 650, "y": 300, "floor": 2 },
+
     { "type": "Room", "id": "U", "x": 50, "y": 50, "floor": 3 },
     { "type": "Room", "id": "V", "x": 250, "y": 50, "floor": 3 },
     { "type": "Room", "id": "W", "x": 450, "y": 50, "floor": 3 },
@@ -30,6 +32,7 @@
     { "type": "Room", "id": "BB", "x": 50, "y": 250, "floor": 3 },
     { "type": "Room", "id": "CC", "x": 450, "y": 300, "floor": 3 },
     { "type": "Room", "id": "DD", "x": 650, "y": 300, "floor": 3 },
+
     { "type": "Intersection", "id": "I1", "x": 50, "y": 150, "floor": 1 },
     { "type": "Intersection", "id": "I2", "x": 250, "y": 150, "floor": 1 },
     { "type": "Intersection", "id": "I3", "x": 450, "y": 150, "floor": 1 },
