@@ -1,8 +1,8 @@
 import java.util.*;
 
 class UIController {
-    ControlP5 cp5; // ControlP5-objekt til GUI-kontroller
-    Graph graph; // Graph-objekt til at administrere noder og kanter
+    ControlP5 cp5;
+    Graph grap;
     HCOLMaps parent;
     String startNode = "";
     String endNode = "";
@@ -144,22 +144,18 @@ class UIController {
     String[] getRoomIds() {
         return graph.rooms.keySet().stream()
             .sorted((a, b) -> {
-                // Sammenlign først efter længde (kortere først)
                 if (a.length() != b.length()) {
                     return Integer.compare(a.length(), b.length());
                 }
-                // Hvis længderne er ens, sammenlign alfabetisk
                 return a.compareTo(b);
             })
             .toArray(String[]::new);
     }
 
-    // Opdaterer etiketten for den aktuelle etage
     private void updateFloorLabel() {
         cp5.get(Textlabel.class, "floorLabel").setText("Etage: " + parent.currentFloor);
     }
 
-    // Opdaterer synligheden af knapperne for etageskift
     private void updateFloorButtons() {
         int minFloor = parent.layout.getGraph().getMinFloor();
         int maxFloor = parent.layout.getGraph().getMaxFloor();

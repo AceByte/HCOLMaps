@@ -3,7 +3,7 @@ class Layout {
 
     Layout() {
         graph = new Graph();
-        graph.loadFromJson("Data.json"); // Indlæs noder og kanter fra JSON
+        graph.loadFromJson("Data.json"); 
     }
 
     Graph getGraph() {

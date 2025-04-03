@@ -39,26 +39,26 @@ class Graph {
             JSONObject edge = edges.getJSONObject(i);
             String from = edge.getString("from");
             String to = edge.getString("to");
-            addEdge(from, to); // Ignorer eventuelle foruddefinerede vægte
+            addEdge(from, to);
         }
     }
 
     void addRoom(String id, float x, float y, int floor) {
-        Room room = new Room(id, x, y, floor); // Opret et nyt værelse med en standardkategori
-        rooms.put(id, room); // Tilføj værelset til kortet
-        adjacencyList.put(id, new HashMap<>()); // Initialiser adjacenslisten for værelset
+        Room room = new Room(id, x, y, floor);
+        rooms.put(id, room);
+        adjacencyList.put(id, new HashMap<>());
     }
 
     void addIntersection(String id, float x, float y, int floor) {
-        Intersection intersection = new Intersection(id, x, y, floor); // Opret et nyt kryds
-        intersections.put(id, intersection); // Tilføj krydset til kortet
-        adjacencyList.put(id, new HashMap<>()); // Initialiser adjacenslisten for krydset
+        Intersection intersection = new Intersection(id, x, y, floor);
+        intersections.put(id, intersection);
+        adjacencyList.put(id, new HashMap<>());
     }
 
     void addStaircase(String id, float x, float y, int startFloor, int endFloor) {
-        Staircase staircase = new Staircase(id, x, y, startFloor, endFloor); // Opret en ny trappe
-        staircases.put(id, staircase); // Tilføj trappen til kortet
-        adjacencyList.put(id, new HashMap<>()); // Initialiser adjacenslisten for trappen
+        Staircase staircase = new Staircase(id, x, y, startFloor, endFloor);
+        staircases.put(id, staircase);
+        adjacencyList.put(id, new HashMap<>());
     }
 
     void addEdge(String from, String to) {
@@ -84,11 +84,11 @@ class Graph {
     }
 
     HashMap<String, Node> getAllNodes() {
-        HashMap<String, Node> allNodes = new HashMap<>(); // Kort til at gemme alle noder
-        allNodes.putAll(rooms); // Tilføj alle værelser til kortet
-        allNodes.putAll(intersections); // Tilføj alle kryds til kortet
-        allNodes.putAll(staircases); // Tilføj alle trapper til kortet
-        return allNodes; // Returner kortet over alle noder
+        HashMap<String, Node> allNodes = new HashMap<>();
+        allNodes.putAll(rooms);
+        allNodes.putAll(intersections);
+        allNodes.putAll(staircases);
+        return allNodes;
     }
 
     // Minimum og maksimum etage

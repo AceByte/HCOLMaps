@@ -12,7 +12,7 @@ class Hallway {
         if (nodeA != null && nodeB != null) {
             this.weight = dist(nodeA.x, nodeA.y, nodeB.x, nodeB.y);
         } else {
-            this.weight = 0; // Standard til 0, hvis noder mangler
+            this.weight = 0; 
         }
     }
 }

@@ -39,10 +39,9 @@ class MapRenderer {
         if (path != null && path.size() > 1) {
             strokeWeight(3);
             for (int i = 0; i < path.size() - 1; i++) {
-                Node a = path.get(i); // Hent den aktuelle node i stien
-                Node b = path.get(i + 1); // Hent den næste node i stien
+                Node a = path.get(i);
+                Node b = path.get(i + 1);
 
-                // Check for null nodes
                 if (a == null || b == null) {
                     println("Warning: Null node in path at index " + i);
                     continue;
@@ -55,32 +54,31 @@ class MapRenderer {
                     continue;
                 }
 
-                // Fremhæv værelser og trapper, som linjen går igennem
                 if (a instanceof Room && ((Room) a).floor == currentFloor) {
-                    fill(0, 100, 255); // Sæt farven til blå
-                    ellipse(a.x, a.y, 20, 20); // Tegn værelset som en cirkel
+                    fill(0, 100, 255);
+                    ellipse(a.x, a.y, 20, 20);
                 }
                 if (b instanceof Room && ((Room) b).floor == currentFloor) {
-                    fill(0, 100, 255); // Sæt farven til blå
-                    ellipse(b.x, b.y, 20, 20); // Tegn værelset som en cirkel
+                    fill(0, 100, 255);
+                    ellipse(b.x, b.y, 20, 20);
                 }
                 if (a instanceof Staircase && (((Staircase) a).startFloor == currentFloor || ((Staircase) a).endFloor == currentFloor)) {
-                    fill(0, 100, 255); // Sæt farven til blå
-                    rect(a.x - 10, a.y - 10, 20, 20); // Tegn trappen som en firkant
+                    fill(0, 100, 255);
+                    rect(a.x - 10, a.y - 10, 20, 20);
                 }
                 if (b instanceof Staircase && (((Staircase) b).startFloor == currentFloor || ((Staircase) b).endFloor == currentFloor)) {
-                    fill(0, 100, 255); // Sæt farven til blå
-                    rect(b.x - 10, b.y - 10, 20, 20); // Tegn trappen som en firkant
+                    fill(0, 100, 255);
+                    rect(b.x - 10, b.y - 10, 20, 20);
                 }
 
-                stroke(0, 100, 255); // Sæt stregfarven til blå
-                line(a.x, a.y, b.x, b.y); // Tegn linjen mellem noderne
+                stroke(0, 100, 255);
+                line(a.x, a.y, b.x, b.y);
 
-                stroke(0, 200, 255); // Sæt stregfarven til blå
-                dash.offset(dist); // Brug den aktuelle offset
-                dash.line(a.x, a.y, b.x, b.y); // Tegn stiplet linje mellem noderne
+                stroke(0, 200, 255);
+                dash.offset(dist);
+                dash.line(a.x, a.y, b.x, b.y);
 
-                dist += 0.1; // Nulstil dist for at gøre det konsistent
+                dist += 0.1;
             }
         }
         noStroke();
@@ -98,10 +96,10 @@ class MapRenderer {
         // Tegn alle trapper (grå rektangler og etiketter)
         for (Staircase staircase : graph.staircases.values()) {
             if (staircase.startFloor != currentFloor && staircase.endFloor != currentFloor) continue;
-            rect(staircase.x - 10, staircase.y - 10, 20, 20); // Tegn trapper som grå rektangler
+            rect(staircase.x - 10, staircase.y - 10, 20, 20);
             fill(200);
             textAlign(CENTER, CENTER);
-            text(staircase.id, staircase.x, staircase.y - 15); // Tegn trappe-ID
+            text(staircase.id, staircase.x, staircase.y - 15);
         }
 
         // Fremhæv værelser og trapper i stien (blå cirkler og rektangler)
@@ -110,12 +108,12 @@ class MapRenderer {
                 Node node = path.get(i);
 
                 if (node instanceof Room && ((Room) node).floor == currentFloor) {
-                    fill(0, 100, 255); // Sæt farven til blå
-                    ellipse(node.x, node.y, 20, 20); // Tegn værelset som en blå cirkel
+                    fill(0, 100, 255);
+                    ellipse(node.x, node.y, 20, 20);
                 }
                 if (node instanceof Staircase && (((Staircase) node).startFloor == currentFloor || ((Staircase) node).endFloor == currentFloor)) {
-                    fill(0, 100, 255); // Sæt farven til blå
-                    rect(node.x - 10, node.y - 10, 20, 20); // Tegn trappen som en blå rektangel
+                    fill(0, 100, 255);
+                    rect(node.x - 10, node.y - 10, 20, 20);
                 }
             }
         }
@@ -123,13 +121,13 @@ class MapRenderer {
 
     // Hjælpemetode til at hente en node fra grafen baseret på ID
     Node getNode(String id) {
-        if (graph.rooms.containsKey(id)) return graph.rooms.get(id); // Returner værelset hvis ID'et matcher
-        if (graph.intersections.containsKey(id)) return graph.intersections.get(id); // Returner krydset hvis ID'et matcher
-        if (graph.staircases.containsKey(id)) return graph.staircases.get(id); // Returner trappen hvis ID'et matcher
-        return null; // Returner null hvis ingen matchende node findes
+        if (graph.rooms.containsKey(id)) return graph.rooms.get(id);
+        if (graph.intersections.containsKey(id)) return graph.intersections.get(id);
+        if (graph.staircases.containsKey(id)) return graph.staircases.get(id);
+        return null;
     }
 
     void changeFloor(int floor) {
-        currentFloor = floor; // Opdater den aktuelle etage
+        currentFloor = floor;
     }
 }
