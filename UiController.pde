@@ -2,7 +2,7 @@ import java.util.*;
 
 class UIController {
     ControlP5 cp5;
-    Graph grap;
+    Graph graph;
     HCOLMaps parent;
     String startNode = "";
     String endNode = "";
@@ -95,6 +95,14 @@ class UIController {
            .setText("Etage: " + parent.currentFloor)
            .setPosition(700, 150)
            .setSize(100, 30);
+
+        cp5.addButton("openImagePopup")
+           .setLabel("Upload Image")
+           .setPosition(700, 200)
+           .setSize(100, 30)
+           .onClick(event -> {
+               parent.openImagePopup();
+           });
 
         updateFloorButtons();
     }
