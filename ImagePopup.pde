@@ -1,9 +1,7 @@
 import java.util.*;
 import controlP5.*;
+import java.util.*;
 import processing.core.*;
-import gab.opencv.*;
-import org.opencv.core.*;
-import org.opencv.imgproc.*;
 
 public class ImagePopup extends PApplet {
     ControlP5 cp5;
@@ -14,7 +12,6 @@ public class ImagePopup extends PApplet {
     int popupHeight = 600;
     PFont labelFont, headerFont;
     HCOLMaps parent;
-    OpenCV opencv;
     HashMap<String, String> annotations = new HashMap<>();
 
     public ImagePopup(HCOLMaps parent) {
@@ -66,7 +63,6 @@ public class ImagePopup extends PApplet {
     public void imageSelected(File selection) {
         if (selection != null) {
             uploadedImage = loadImage(selection.getAbsolutePath());
-            opencv = new OpenCV(this, uploadedImage);
         }
     }
 
@@ -98,55 +94,9 @@ public class ImagePopup extends PApplet {
     }
 
     void detectShapesAndColors() {
-        opencv.loadImage(uploadedImage);
-        opencv.gray();
-        opencv.threshold(100);
-
-        List<Contour> contours = opencv.findContours();
-        for (Contour contour : contours) {
-            PVector[] points = contour.getPoints();
-            if (points.length > 5) {
-                PVector center = contour.getCentroid();
-                float radius = contour.getRadius();
-                int color = getColorAt(center.x, center.y);
-
-                if (isRed(color)) {
-                    annotations.put("Room", "Detected red circle at " + center);
-                } else if (isBlue(color)) {
-                    annotations.put("Intersection", "Detected blue circle at " + center);
-                } else if (isGreen(color)) {
-                    annotations.put("Hallway", "Detected green line at " + center);
-                } else if (isCyan(color)) {
-                    annotations.put("Staircase", "Detected cyan circle at " + center);
-                } else if (isBlack(color)) {
-                    annotations.put("Wall", "Detected black line at " + center);
-                }
-            }
-        }
-    }
-
-    int getColorAt(float x, float y) {
-        int c = uploadedImage.get((int) x, (int) y);
-        return c;
-    }
-
-    boolean isRed(int color) {
-        return red(color) > 150 && green(color) < 100 && blue(color) < 100;
-    }
-
-    boolean isBlue(int color) {
-        return blue(color) > 150 && red(color) < 100 && green(color) < 100;
-    }
-
-    boolean isGreen(int color) {
-        return green(color) > 150 && red(color) < 100 && blue(color) < 100;
-    }
-
-    boolean isCyan(int color) {
-        return blue(color) > 150 && green(color) > 150 && red(color) < 100;
-    }
-
-    boolean isBlack(int color) {
-        return red(color) < 50 && green(color) < 50 && blue(color) < 50;
+        // Placeholder for shape and color detection logic
+        // This could involve image processing techniques to identify shapes and colors
+        // For now, we will just print a message
+        println("Detecting shapes and colors in the uploaded image...");
     }
 }
