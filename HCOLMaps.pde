@@ -1,7 +1,7 @@
 import controlP5.*;
 import java.util.*;
 
-// Globale variabler
+// Global variables
 Layout layout;
 MapRenderer mapRenderer;
 UIController uiController;
@@ -9,9 +9,9 @@ DashedLines dash;
 List<Node> path = new ArrayList<>();
 ControlP5 cp5;
 int currentFloor = 1;
-ImagePopup imagePopup; // Updated popup reference
+// Removed ImagePopup reference
 
-// setup() - Initialiserer programmet
+// setup() - Initialize the program
 void setup() {
     size(800, 600);
     layout = new Layout();
@@ -20,53 +20,44 @@ void setup() {
     cp5 = new ControlP5(this);
 }
 
-// draw() - Tegner grafen og brugergrænsefladen
+// draw() - Draw the graph and user interface
 void draw() {
     background(20);
     mapRenderer.render(path);
     uiController.render();
 }
 
-// updatePath() - Opdaterer den korteste sti mellem to noder
+// updatePath() - Update the shortest path between two nodes
 void updatePath(String start, String end) {
     if (!layout.getGraph().getAllNodes().containsKey(start)) {
-        println("Fejl: Startnoden '" + start + "' findes ikke i grafen.");
+        println("Error: Start node '" + start + "' not found in the graph.");
         return;
     }
     if (!layout.getGraph().getAllNodes().containsKey(end)) {
-        println("Fejl: Slutnoden '" + end + "' findes ikke i grafen.");
+        println("Error: End node '" + end + "' not found in the graph.");
         return;
     }
 
-    println("Beregner sti fra " + start + " til " + end);
+    println("Calculating path from " + start + " to " + end);
     Dijkstra dijkstra = new Dijkstra(layout.getGraph());
     path = dijkstra.findShortestPath(start, end);
 
     if (path == null || path.isEmpty()) {
-        println("Fejl: Ingen sti fundet mellem '" + start + "' og '" + end + "'.");
+        println("Error: No path found between '" + start + "' and '" + end + "'.");
     } else {
-        println("Aktuel sti: " + path);
+        println("Current path: " + path);
     }
 }
 
-// changeFloor() - Skifter til en anden etage
+// changeFloor() - Switch to a different floor
 void changeFloor(int floor) {
     int minFloor = layout.getGraph().getMinFloor();
     int maxFloor = layout.getGraph().getMaxFloor();
     if (floor >= minFloor && floor <= maxFloor) {
         currentFloor = floor;
         mapRenderer.changeFloor(floor);
-        println("Aktuel etage: " + currentFloor);
+        println("Current floor: " + currentFloor);
     }
 }
 
-// openImagePopup() - Åbner et popup-vindue med et billede
-void openImagePopup() {
-    if (imagePopup == null || !imagePopup.isVisible) {
-        imagePopup = new ImagePopup(this);
-        PApplet.runSketch(new String[]{"ImagePopup"}, imagePopup);
-        imagePopup.open();
-    } else {
-        println("ImagePopup is already open.");
-    }
-}
+// Removed openImagePopup() method

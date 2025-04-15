@@ -96,14 +96,6 @@ class UIController {
            .setPosition(700, 150)
            .setSize(100, 30);
 
-        cp5.addButton("openImagePopup")
-           .setLabel("Upload Image")
-           .setPosition(670, 200)
-           .setSize(120, 30)
-           .onClick(event -> {
-               parent.openImagePopup();
-           });
-
         updateFloorButtons();
     }
 
