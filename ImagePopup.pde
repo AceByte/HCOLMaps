@@ -1,6 +1,6 @@
 import java.util.*;
 import controlP5.*;
-
+//please just work
 public class ImagePopup extends PApplet {
     ControlP5 cp5;
     PImage uploadedImage;
