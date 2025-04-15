@@ -98,8 +98,8 @@ class UIController {
 
         cp5.addButton("openImagePopup")
            .setLabel("Upload Image")
-           .setPosition(700, 200)
-           .setSize(100, 30)
+           .setPosition(670, 200)
+           .setSize(120, 30)
            .onClick(event -> {
                parent.openImagePopup();
            });
