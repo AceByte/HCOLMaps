@@ -9,7 +9,7 @@ DashedLines dash;
 List<Node> path = new ArrayList<>();
 ControlP5 cp5;
 int currentFloor = 1;
-ImagePopup popup; // Declare a global variable to track the popup instance
+ImagePopup imagePopup; // Updated popup reference
 
 // setup() - Initialiserer programmet
 void setup() {
@@ -62,27 +62,11 @@ void changeFloor(int floor) {
 
 // openImagePopup() - Åbner et popup-vindue med et billede
 void openImagePopup() {
-    if (popup == null || !popup.isVisible) { // Check if the popup is already open
-        popup = new ImagePopup(this); // Pass the current HCOLMaps instance
-        PApplet.runSketch(new String[]{"ImagePopup"}, popup);
-        popup.open();
+    if (imagePopup == null || !imagePopup.isVisible) {
+        imagePopup = new ImagePopup(this);
+        PApplet.runSketch(new String[]{"ImagePopup"}, imagePopup);
+        imagePopup.open();
     } else {
         println("ImagePopup is already open.");
     }
-}
-
-List<Arrow> getArrows() {
-    // Return a list of existing arrows
-    return Arrays.asList(
-        new Arrow(new PVector(100, 100), new PVector(200, 200)),
-        new Arrow(new PVector(300, 300), new PVector(400, 400))
-    );
-}
-
-List<TextLabel> getTextLabels() {
-    // Return a list of existing text labels
-    return Arrays.asList(
-        new TextLabel("Room A", new PVector(150, 150)),
-        new TextLabel("Room B", new PVector(350, 350))
-    );
 }
