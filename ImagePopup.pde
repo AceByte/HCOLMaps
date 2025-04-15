@@ -63,6 +63,7 @@ public class ImagePopup extends PApplet {
     public void imageSelected(File selection) {
         if (selection != null) {
             uploadedImage = loadImage(selection.getAbsolutePath());
+            processImage();
         }
     }
 
@@ -98,5 +99,13 @@ public class ImagePopup extends PApplet {
         // This could involve image processing techniques to identify shapes and colors
         // For now, we will just print a message
         println("Detecting shapes and colors in the uploaded image...");
+    }
+
+    void processImage() {
+        if (uploadedImage != null) {
+            ImageProcessor processor = new ImageProcessor(uploadedImage, parent.layout.getGraph());
+            processor.processImage();
+            parent.layout.getGraph().loadFromJson("Data.json"); // Reload the graph to include new nodes and edges
+        }
     }
 }

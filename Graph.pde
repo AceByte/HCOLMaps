@@ -83,6 +83,28 @@ class Graph {
         adjacencyList.get(to).put(from, weight);
     }
 
+    void addNode(Node node) {
+        if (node instanceof Room) {
+            rooms.put(node.id, (Room) node);
+        } else if (node instanceof Intersection) {
+            intersections.put(node.id, (Intersection) node);
+        } else if (node instanceof Staircase) {
+            staircases.put(node.id, (Staircase) node);
+        }
+        adjacencyList.put(node.id, new HashMap<>());
+    }
+
+    void addEdge(String from, String to, int weight) {
+        if (!adjacencyList.containsKey(from)) {
+            adjacencyList.put(from, new HashMap<>());
+        }
+        if (!adjacencyList.containsKey(to)) {
+            adjacencyList.put(to, new HashMap<>());
+        }
+        adjacencyList.get(from).put(to, weight);
+        adjacencyList.get(to).put(from, weight);
+    }
+
     HashMap<String, Node> getAllNodes() {
         HashMap<String, Node> allNodes = new HashMap<>();
         allNodes.putAll(rooms);
