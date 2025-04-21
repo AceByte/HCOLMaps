@@ -10,19 +10,31 @@ List<Node> path = new ArrayList<>();
 ControlP5 cp5;
 int currentFloor = 1;
 // Removed ImagePopup reference
+PImage backgroundImage; // Declare a variable for the image
 
 // setup() - Initialize the program
 void setup() {
-    size(800, 600);
+    size(1200, 800);
     layout = new Layout();
     mapRenderer = new MapRenderer(layout.getGraph(), this);
     uiController = new UIController(this, layout.getGraph());
     cp5 = new ControlP5(this);
+
+    currentFloor = 1; // Start on floor 3
+    mapRenderer.changeFloor(currentFloor);
+    backgroundImage = loadImage("Floor_" + currentFloor + ".png"); // Load the image for floor 3
+    mouseReleased();
 }
 
 // draw() - Draw the graph and user interface
 void draw() {
     background(20);
+
+    // Display the image
+    if (backgroundImage != null) {
+        image(backgroundImage, 0, 0, width, 540); // Adjust position and size as needed
+    }
+
     mapRenderer.render(path);
     uiController.render();
 }
@@ -56,8 +68,13 @@ void changeFloor(int floor) {
     if (floor >= minFloor && floor <= maxFloor) {
         currentFloor = floor;
         mapRenderer.changeFloor(floor);
+        backgroundImage = loadImage("Floor_" + floor + ".png"); // Load the corresponding floor image
         println("Current floor: " + currentFloor);
     }
 }
 
 // Removed openImagePopup() method
+
+void mouseReleased() {
+    println("x: " + mouseX + ", y: " + mouseY); // Corrected concatenation
+}

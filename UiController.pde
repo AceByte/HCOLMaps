@@ -66,7 +66,7 @@ class UIController {
         // knapper til at skifte etager
         cp5.addButton("floorUp")
            .setLabel("Op")
-           .setPosition(700, 50)
+           .setPosition(700, parent.height - 200) // Adjusted y-position to match dropdown menus
            .setSize(50, 30)
            .setColorBackground(color(50))
            .setColorActive(color(150))
@@ -79,7 +79,7 @@ class UIController {
 
         cp5.addButton("floorDown")
            .setLabel("Ned")
-           .setPosition(700, 100)
+           .setPosition(760, parent.height - 200) // Adjusted y-position to match dropdown menus
            .setSize(50, 30)
            .setColorBackground(color(50))
            .setColorActive(color(150))
@@ -140,14 +140,26 @@ class UIController {
             .toArray(String[]::new);
     }
 
-    // Hent kun ID'er for rum ("rooms") og sorter dem med single-letter IDs først
+    // Hent kun ID'er for rum ("rooms") og sorter dem med korrekt numerisk rækkefølge
     String[] getRoomIds() {
         return graph.rooms.keySet().stream()
             .sorted((a, b) -> {
-                if (a.length() != b.length()) {
-                    return Integer.compare(a.length(), b.length());
+                String[] aParts = a.split("\\.");
+                String[] bParts = b.split("\\.");
+                for (int i = 0; i < Math.min(aParts.length, bParts.length); i++) {
+                    try {
+                        int comparison = Integer.compare(
+                            Integer.parseInt(aParts[i]), 
+                            Integer.parseInt(bParts[i])
+                        );
+                        if (comparison != 0) return comparison;
+                    } catch (NumberFormatException e) {
+                        // Fallback to lexicographical comparison for non-numeric parts
+                        int comparison = aParts[i].compareTo(bParts[i]);
+                        if (comparison != 0) return comparison;
+                    }
                 }
-                return a.compareTo(b);
+                return Integer.compare(aParts.length, bParts.length);
             })
             .toArray(String[]::new);
     }
