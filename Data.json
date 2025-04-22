@@ -82,6 +82,8 @@
     { "type": "Intersection", "id": "el", "x": 997, "y": 265, "floor": 2 },
     { "type": "Intersection", "id": "gang 1.65", "x": 997, "y": 199, "floor": 2 },
     { "type": "Intersection", "id": "dør 1.65", "x": 1038, "y": 197, "floor": 2 },
+    { "type": "Intersection", "id": "venstre højre vandhane", "x": 538, "y": 219, "floor": 2 },
+
 
     { "type":"Intersection", "id": "I2.01", "x": 336, "y": 189, "floor": 3 },
     { "type":"Intersection", "id": "I2.02", "x": 382, "y": 201, "floor": 3 },
@@ -225,7 +227,6 @@
     { "from": "venstre vandhane", "to": "til vesntre stor trappe 1"},
     { "from": "til vesntre stor trappe 1", "to": "venstre stor trappe 1"},
     { "from": "venstre stor trappe 1", "to": "midt"},
-    { "from": "gang 1.07", "to": "venstre vandhane"},
     { "from": "midt", "to": "højre stor trappe 1"},
     { "from": "til højre stor trappe 1", "to": "højre stor trappe 1"},
     { "from": "venstre stor trappe 1", "to": "højre stor trappe 1"},
@@ -257,7 +258,13 @@
     { "from": "gang 1.65", "to": "dør 1.64"},
     { "from": "1.65", "to": "dør 1.65"},
     { "from": "1.63a", "to": "el"},
-    { "from": "3", "to": "el"}
+    { "from": "3", "to": "el"},
+    { "from": "venstre højre vandhane", "to": "venstre stor trappe 2"},
+    { "from": "venstre vandhane", "to": "venstre højre vandhane"},
+    { "from": "gang 1.09", "to": "venstre vandhane"}
+
+
+
 
   ]
 }
