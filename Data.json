@@ -57,12 +57,12 @@
     { "type": "Intersection", "id": "I13", "x": 550, "y": 300, "floor": 2 },
     { "type": "Intersection", "id": "I14", "x": 550, "y": 250, "floor": 2 },
 
-    { "type": "Intersection", "id": "I15", "x": 50, "y": 150, "floor": 3 },
-    { "type": "Intersection", "id": "I16", "x": 250, "y": 150, "floor": 3 },
-    { "type": "Intersection", "id": "I17", "x": 450, "y": 150, "floor": 3 },
-    { "type": "Intersection", "id": "I18", "x": 550, "y": 150, "floor": 3 },
-    { "type": "Intersection", "id": "I19", "x": 650, "y": 150, "floor": 3 },
-    { "type": "Intersection", "id": "I20", "x": 550, "y": 300, "floor": 3 },
+    { "type": "Intersection", "id": "I15", "x": 336, "y": 189, "floor": 3 },
+    { "type": "Intersection", "id": "I16", "x": 338, "y": 220, "floor": 3 },
+    { "type": "Intersection", "id": "I17", "x": 381, "y": 220, "floor": 3 },
+    { "type": "Intersection", "id": "I18", "x": 343, "y": 237, "floor": 3 },
+    { "type": "Intersection", "id": "I19", "x": 341, "y": 269, "floor": 3 },
+    { "type": "Intersection", "id": "I20", "x": 404, "y": 220, "floor": 3 },
     { "type": "Intersection", "id": "I21", "x": 550, "y": 250, "floor": 3 },
 
     { "type": "Staircase", "id": "syd", "x": 320, "y": 270, "startFloor": 1, "endFloor": 2 },
@@ -72,5 +72,12 @@
     { "type": "Staircase", "id": "2", "x": 588, "y": 248, "startFloor": 2, "endFloor": 3 },
     { "type": "Staircase", "id": "3", "x": 962, "y": 300, "startFloor": 2, "endFloor": 3 }
   ],
-  "edges": []
+  "edges": [
+    { "from": "2.01", "to": "I15"},
+    { "from": "I15", "to": "I16"},
+    { "from": "I16", "to": "I17"},
+    { "from": "I16", "to": "I18"},
+    { "from": "I18", "to": "I19"},
+    { "from": "I19", "to": "1"}
+  ]
 }
