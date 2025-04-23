@@ -12,7 +12,7 @@ class Dijkstra {
     }
 
     List<Node> dijkstra(Graph graph, String start, String end) {
-        // Initialiser afstande og prioritetskø
+        // Initialize distances and priority queue
         Map<String, Integer> distances = new HashMap<>();
         Map<String, String> previous = new HashMap<>();
         PriorityQueue<String> pq = new PriorityQueue<>(Comparator.comparingInt(distances::get));
@@ -25,9 +25,15 @@ class Dijkstra {
         distances.put(start, 0);
         pq.add(start);
 
-        // Beregn korteste sti
+        // Calculate shortest path
         while (!pq.isEmpty()) {
             String current = pq.poll();
+
+            // Skip intermediate "Room" nodes
+            if (!current.equals(start) && !current.equals(end) && allNodes.get(current) instanceof Room) {
+                continue;
+            }
+
             if (current.equals(end)) {
                 break;
             }
@@ -45,7 +51,7 @@ class Dijkstra {
             }
         }
 
-        // Rekonstruer stien fra slut til start
+        // Reconstruct the path from end to start
         List<Node> path = new ArrayList<>();
         for (String at = end; at != null; at = previous.get(at)) {
             path.add(allNodes.get(at));
