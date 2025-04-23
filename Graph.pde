@@ -70,7 +70,13 @@ class Graph {
             return;
         }
 
-        // Beregn vægt baseret på pixeldistancen mellem noderne
+        // Prevent edges between two "Room" nodes
+        if (nodeA instanceof Room && nodeB instanceof Room) {
+            println("Skipping edge between two rooms: " + from + " -> " + to);
+            return;
+        }
+
+        // Calculate weight based on pixel distance between nodes
         int weight = (int) dist(nodeA.x, nodeA.y, nodeB.x, nodeB.y);
 
         if (!adjacencyList.containsKey(from)) {
