@@ -20,6 +20,7 @@ void setup() {
     uiController = new UIController(this, layout.getGraph());
     cp5 = new ControlP5(this);
 
+    currentFloor = 1;
     mapRenderer.changeFloor(currentFloor);
     backgroundImage = loadImage("Floor_" + currentFloor + ".png"); // Load the image for floor 3
     mouseReleased();
