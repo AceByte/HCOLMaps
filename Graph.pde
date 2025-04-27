@@ -70,7 +70,7 @@ class Graph {
             return;
         }
 
-        // Beregn vægt baseret på pixeldistancen mellem noderne
+        // Calculate weight based on pixel distance between nodes
         int weight = (int) dist(nodeA.x, nodeA.y, nodeB.x, nodeB.y);
 
         if (!adjacencyList.containsKey(from)) {

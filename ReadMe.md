@@ -1,90 +1,87 @@
 # HCOLMaps
 
-HCOLMaps is a project that visualizes a graph of rooms and intersections, and calculates the shortest path between two nodes using Dijkstra's algorithm. The project is built using Processing.
+HCOLMaps is a project that visualizes a graph of rooms, intersections, staircases, and calculates the shortest path between two nodes using Dijkstra's algorithm. The project is built using Processing.
 
 ## Project Structure
 
-- `HCOLMaps.pde`: The main file that sets up the environment, initializes the layout, map renderer, and UI controller, and handles the drawing and path updating.
-- `Layout.pde`: Defines the `Layout` class, which creates rooms, intersections, and hallways, and adds them to the graph.
-- `LayoutManager.pde`: Defines the `LayoutManager` class, which handles the creation of rooms and intersections.
-- `Graph.pde`: Defines the `Graph` class, which manages nodes and edges.
-- `Node.pde`: Defines the `Node` class, which represents a node in the graph.
-- `Room.pde`: Defines the `Room` class, which extends `Node` and represents a room.
-- `Intersection.pde`: Defines the `Intersection` class, which extends `Node` and represents an intersection.
-- `Hallway.pde`: Defines the `Hallway` class, which represents a hallway between two nodes.
-- `Dijkstra.pde`: Implements Dijkstra's algorithm to find the shortest path between two nodes.
-- `MapRenderer.pde`: Defines the `MapRenderer` class, which handles the rendering of the graph and the shortest path.
-- `UiController.pde`: Defines the `UIController` class, which manages the user interface for selecting start and end nodes and calculating the path.
-
-## Setup
-
-1. Install [Processing](https://processing.org/download/).
-2. Clone this repository to your local machine.
-3. Open the project in Processing.
-
-## Usage
-
-1. Run the `HCOLMaps.pde` file in Processing.
-2. Use the dropdown menus to select the start and end nodes.
-3. Click the "Calculate Path" button to find and display the shortest path between the selected nodes.
+- **HCOLMaps.pde**: Main entry point of the application. Handles setup, rendering, and user interactions.
+- **Graph.pde**: Represents the graph structure, including nodes (rooms, intersections, staircases, exits) and edges.
+- **Node.pde**: Base class for all nodes in the graph.
+- **Room.pde**: Represents a room in the graph.
+- **Intersection.pde**: Represents an intersection in the graph.
+- **Staircase.pde**: Represents a staircase connecting different floors.
+- **Layout.pde**: Manages the graph layout and loads data from a JSON file.
+- **LayoutManager.pde**: Provides additional layout management functionality.
+- **MapRenderer.pde**: Handles rendering of the map, including nodes, edges, and paths.
+- **UIController.pde**: Manages the user interface, including dropdowns and buttons.
+- **Dijkstra.pde**: Implements Dijkstra's algorithm for finding the shortest path.
+- **Hallway.pde**: Represents a hallway (edge) between two nodes.
+- **Data.json**: Contains the graph data, including nodes and edges.
 
 ## Classes and Methods
 
 ### HCOLMaps
-
-- `setup()`: Initializes the layout, map renderer, and UI controller, and sets the default path.
-- `draw()`: Renders the map and UI.
-- `updatePath(String start, String end)`: Updates the path between the specified start and end nodes using Dijkstra's algorithm.
-
-### Layout
-
-- `Layout()`: Constructor that initializes the graph and creates rooms and hallways.
-- `createRoomsAndHallways()`: Creates sample rooms, intersections, and hallways, and adds them to the graph.
-- `calculateWeight(String start, String end, Room[] rooms, Intersection[] intersections)`: Calculates the weight (distance) between two nodes.
-- `findNode(String id, Room[] rooms, Intersection[] intersections)`: Finds a node by its ID.
-- `getGraph()`: Returns the graph.
-
-### LayoutManager
-
-- `LayoutManager(Graph graph)`: Constructor that initializes the graph and creates rooms and intersections.
-- `createRooms()`: Creates sample rooms and adds them to the graph.
-- `createIntersections()`: Creates sample intersections and adds them to the graph.
+- **setup()**: Initializes the application, including layout, renderer, and UI.
+- **draw()**: Renders the map and UI.
+- **updatePath(start, end)**: Updates the shortest path between two nodes.
+- **changeFloor(floor)**: Changes the current floor and updates the map.
+- **mouseReleased()**: Logs the mouse position when released.
 
 ### Graph
-
-- `addNode(String id, float x, float y)`: Adds a node to the graph.
-- `addEdge(String from, String to, int weight)`: Adds an edge between two nodes with the specified weight.
+- **loadFromJson(filePath)**: Loads graph data from a JSON file.
+- **addRoom(id, x, y, floor)**: Adds a room to the graph.
+- **addIntersection(id, x, y, floor)**: Adds an intersection to the graph.
+- **addStaircase(id, x, y, startFloor, endFloor)**: Adds a staircase to the graph.
+- **addEdge(from, to)**: Adds an edge between two nodes.
+- **addNode(node)**: Adds a generic node to the graph.
+- **addEdge(from, to, weight)**: Adds an edge with a specific weight.
+- **getAllNodes()**: Returns all nodes in the graph.
+- **getMinFloor() / getMaxFloor()**: Returns the minimum/maximum floor in the graph.
 
 ### Node
-
-- `Node(String id, float x, float y)`: Constructor that initializes the node with the specified ID and coordinates.
+- **Node(id, x, y)**: Constructor for a generic node.
+- **toString()**: Returns the string representation of the node ID.
 
 ### Room
-
-- `Room(String name, float x, float y)`: Constructor that initializes the room with the specified name and coordinates.
+- **Room(name, x, y, floor)**: Constructor for a room node.
 
 ### Intersection
+- **Intersection(name, x, y, floor)**: Constructor for an intersection node.
 
-- `Intersection(String name, float x, float y)`: Constructor that initializes the intersection with the specified name and coordinates.
+### Staircase
+- **Staircase(id, x, y, startFloor, endFloor)**: Constructor for a staircase node.
 
-### Hallway
+### Layout
+- **Layout()**: Initializes the graph and loads data from a JSON file.
+- **getGraph()**: Returns the graph object.
 
-- `Hallway(String start, String end, float weight)`: Constructor that initializes the hallway with the specified start and end nodes and weight.
-
-### Dijkstra
-
-- `Dijkstra(Graph graph)`: Constructor that initializes the algorithm with the specified graph.
-- `findShortestPath(String start, String end)`: Finds the shortest path between the specified start and end nodes.
-- `dijkstra(Graph graph, String start, String end)`: Implements Dijkstra's algorithm to find the shortest path.
+### LayoutManager
+- **LayoutManager(graph)**: Constructor for managing the graph layout.
 
 ### MapRenderer
-
-- `MapRenderer(Graph graph)`: Constructor that initializes the renderer with the specified graph.
-- `render(List<Node> path)`: Renders the graph and the specified path.
+- **MapRenderer(graph, parent)**: Constructor for the map renderer.
+- **render(path)**: Renders the map, including nodes, edges, and the shortest path.
+- **changeFloor(floor)**: Updates the current floor for rendering.
+- **getNode(id)**: Retrieves a node from the graph by its ID.
 
 ### UIController
+- **UIController(parent, graph)**: Constructor for the UI controller.
+- **render()**: Renders the UI elements.
+- **updatePath()**: Updates the path based on selected start and end nodes.
+- **updateFloorLabel()**: Updates the floor label in the UI.
+- **updateFloorButtons()**: Updates the visibility of floor navigation buttons.
+- **getNodeIds()**: Retrieves all node IDs from the graph.
+- **getRoomIds()**: Retrieves room IDs sorted numerically.
 
-- `UIController(HCOLMaps parent, Graph graph)`: Constructor that initializes the UI controller with the specified parent and graph.
-- `render()`: Renders the UI.
-- `updatePath()`: Updates the path based on the selected start and end nodes.
-- `updateDropdownSelection()`: Ensures the dropdowns reflect the correct selection.
+### Dijkstra
+- **Dijkstra(graph)**: Constructor for the Dijkstra algorithm.
+- **findShortestPath(start, end)**: Finds the shortest path between two nodes.
+- **dijkstra(graph, start, end)**: Implements the Dijkstra algorithm.
+
+### Hallway
+- **Hallway(start, end, allNodes)**: Constructor for a hallway edge.
+- **weight**: Dynamically calculates the weight based on pixel distance.
+
+### Data.json
+- **nodes**: Defines the nodes in the graph, including type, ID, coordinates, and floor.
+- **edges**: Defines the edges between nodes.
