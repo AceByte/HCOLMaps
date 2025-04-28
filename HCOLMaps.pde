@@ -1,7 +1,7 @@
 import controlP5.*;
 import java.util.*;
 
-// Global variables
+// Globale variabler
 Layout layout;
 MapRenderer mapRenderer;
 UIController uiController;
@@ -9,10 +9,8 @@ DashedLines dash;
 List<Node> path = new ArrayList<>();
 ControlP5 cp5;
 int currentFloor = 1;
-// Removed ImagePopup reference
-PImage backgroundImage; // Declare a variable for the image
+PImage backgroundImage;
 
-// setup() - Initialize the program
 void setup() {
     size(1200, 800);
     layout = new Layout();
@@ -22,59 +20,51 @@ void setup() {
 
     currentFloor = 1;
     mapRenderer.changeFloor(currentFloor);
-    backgroundImage = loadImage("Floor_" + currentFloor + ".png"); // Load the image for floor 3
+    backgroundImage = loadImage("Floor_" + currentFloor + ".png");
     mouseReleased();
 }
 
-// draw() - Draw the graph and user interface
 void draw() {
     background(20);
 
-    // Display the image
     if (backgroundImage != null) {
-        image(backgroundImage, 0, 0, width, 540); // Adjust position and size as needed
+        image(backgroundImage, 0, 0, width, 540);
     }
 
     mapRenderer.render(path);
     uiController.render();
 }
 
-// updatePath() - Update the shortest path between two nodes
+// updatePath() - Opdaterer stien baseret på de valgte start- og slutnoder
 void updatePath(String start, String end) {
     if (!layout.getGraph().getAllNodes().containsKey(start)) {
-        println("Error: Start node '" + start + "' not found in the graph.");
+        println("Fejl: Startnode '" + start + "' blev ikke fundet i grafen.");
         return;
     }
     if (!layout.getGraph().getAllNodes().containsKey(end)) {
-        println("Error: End node '" + end + "' not found in the graph.");
+        println("Fejl: Slutnode '" + end + "' blev ikke fundet i grafen.");
         return;
     }
 
-    println("Calculating path from " + start + " to " + end);
+    println("Beregner sti fra " + start + " til " + end);
     Dijkstra dijkstra = new Dijkstra(layout.getGraph());
     path = dijkstra.findShortestPath(start, end);
 
     if (path == null || path.isEmpty()) {
-        println("Error: No path found between '" + start + "' and '" + end + "'.");
+        println("Fejl: Ingen sti fundet mellem '" + start + "' og '" + end + "'.");
     } else {
-        println("Current path: " + path);
+        println("Aktuel sti: " + path);
     }
 }
 
-// changeFloor() - Switch to a different floor
+// changeFloor() - Skift etage
 void changeFloor(int floor) {
     int minFloor = layout.getGraph().getMinFloor();
     int maxFloor = layout.getGraph().getMaxFloor();
     if (floor >= minFloor && floor <= maxFloor) {
         currentFloor = floor;
         mapRenderer.changeFloor(floor);
-        backgroundImage = loadImage("Floor_" + floor + ".png"); // Load the corresponding floor image
-        println("Current floor: " + currentFloor);
+        backgroundImage = loadImage("Floor_" + floor + ".png");
+        println("Aktuel etage: " + currentFloor);
     }
-}
-
-// Removed openImagePopup() method
-
-void mouseReleased() {
-    println("x: " + mouseX + ", y: " + mouseY); // Corrected concatenation
 }

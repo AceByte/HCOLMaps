@@ -24,14 +24,14 @@ class MapRenderer {
         stroke(150);
         strokeWeight(2);
         for (String from : graph.adjacencyList.keySet()) {
-            Node nodeA = getNode(from); // Hent noden for fra-ID'et
+            Node nodeA = getNode(from);
             if (nodeA == null || (nodeA instanceof Room && ((Room) nodeA).floor != currentFloor) ||
                 (nodeA instanceof Intersection && ((Intersection) nodeA).floor != currentFloor)) continue;
             for (String to : graph.adjacencyList.get(from).keySet()) {
-                Node nodeB = getNode(to); // Hent noden for til-ID'et
+                Node nodeB = getNode(to);
                 if (nodeB == null || (nodeB instanceof Room && ((Room) nodeB).floor != currentFloor) ||
                     (nodeB instanceof Intersection && ((Intersection) nodeB).floor != currentFloor)) continue;
-                line(nodeA.x, nodeA.y, nodeB.x, nodeB.y); // Tegn linjen mellem noderne
+                line(nodeA.x, nodeA.y, nodeB.x, nodeB.y);
             }
         }
 
@@ -43,7 +43,7 @@ class MapRenderer {
                 Node b = path.get(i + 1);
 
                 if (a == null || b == null) {
-                    println("Warning: Null node in path at index " + i);
+                    println("Advarsel: Null node i stien ved indeks " + i);
                     continue;
                 }
 
@@ -56,19 +56,19 @@ class MapRenderer {
 
                 if (a instanceof Room && ((Room) a).floor == currentFloor) {
                     fill(0, 100, 255);
-                    ellipse(a.x, a.y, 30, 30); // Increased size from 20 to 30
+                    ellipse(a.x, a.y, 30, 30);
                 }
                 if (b instanceof Room && ((Room) b).floor == currentFloor) {
                     fill(0, 100, 255);
-                    ellipse(b.x, b.y, 30, 30); // Increased size from 20 to 30
+                    ellipse(b.x, b.y, 30, 30);
                 }
                 if (a instanceof Staircase && (((Staircase) a).startFloor == currentFloor || ((Staircase) a).endFloor == currentFloor)) {
                     fill(0, 100, 255);
-                    rect(a.x - 15, a.y - 15, 30, 30); // Increased size from 20x20 to 30x30
+                    rect(a.x - 15, a.y - 15, 30, 30);
                 }
                 if (b instanceof Staircase && (((Staircase) b).startFloor == currentFloor || ((Staircase) b).endFloor == currentFloor)) {
                     fill(0, 100, 255);
-                    rect(b.x - 15, b.y - 15, 30, 30); // Increased size from 20x20 to 30x30
+                    rect(b.x - 15, b.y - 15, 30, 30);
                 }
 
                 stroke(0, 100, 255);
@@ -87,19 +87,19 @@ class MapRenderer {
         fill(200);
         for (Room room : graph.rooms.values()) {
             if (room.floor != currentFloor) continue;
-            ellipse(room.x, room.y, 30, 30); // Increased size from 20 to 30
-            fill(0); // Set text color to black
+            ellipse(room.x, room.y, 30, 30);
+            fill(0);
             textAlign(CENTER, CENTER);
-            text(room.id, room.x, room.y - 20); // Adjusted label position
+            text(room.id, room.x, room.y - 20);
         }
 
         // Tegn alle trapper (grå rektangler og etiketter)
         for (Staircase staircase : graph.staircases.values()) {
             if (staircase.startFloor != currentFloor && staircase.endFloor != currentFloor) continue;
-            rect(staircase.x - 15, staircase.y - 15, 30, 30); // Increased size from 20x20 to 30x30
-            fill(0); // Set text color to black
+            rect(staircase.x - 15, staircase.y - 15, 30, 30);
+            fill(0);
             textAlign(CENTER, CENTER);
-            text(staircase.id, staircase.x, staircase.y - 20); // Adjusted label position
+            text(staircase.id, staircase.x, staircase.y - 20);
         }
 
         // Fremhæv værelser og trapper i stien (blå cirkler og rektangler)
@@ -109,11 +109,11 @@ class MapRenderer {
 
                 if (node instanceof Room && ((Room) node).floor == currentFloor) {
                     fill(0, 100, 255);
-                    ellipse(node.x, node.y, 30, 30); // Increased size from 20 to 30
+                    ellipse(node.x, node.y, 30, 30);
                 }
                 if (node instanceof Staircase && (((Staircase) node).startFloor == currentFloor || ((Staircase) node).endFloor == currentFloor)) {
                     fill(0, 100, 255);
-                    rect(node.x - 15, node.y - 15, 30, 30); // Increased size from 20x20 to 30x30
+                    rect(node.x - 15, node.y - 15, 30, 30);
                 }
             }
         }

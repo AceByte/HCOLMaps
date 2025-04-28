@@ -9,7 +9,7 @@ class Graph {
     HashMap<String, HashMap<String, Integer>> adjacencyList = new HashMap<>();
 
     void loadFromJson(String filePath) {
-        JSONObject data = loadJSONObject(filePath); // Indlæs JSON-fil
+        JSONObject data = loadJSONObject(filePath);
         JSONArray nodes = data.getJSONArray("nodes");
         JSONArray edges = data.getJSONArray("edges");
 
@@ -66,11 +66,11 @@ class Graph {
         Node nodeB = getAllNodes().get(to);
 
         if (nodeA == null || nodeB == null) {
-            println("Error: One or both nodes not found for edge: " + from + " -> " + to);
+            println("Fejl: En eller begge noder blev ikke fundet for kanten: " + from + " -> " + to);
             return;
         }
 
-        // Calculate weight based on pixel distance between nodes
+        // Beregn vægt baseret på pixelafstand mellem noder
         int weight = (int) dist(nodeA.x, nodeA.y, nodeB.x, nodeB.y);
 
         if (!adjacencyList.containsKey(from)) {

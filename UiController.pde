@@ -35,7 +35,7 @@ class UIController {
                    println("Startnode valgt: " + startNode);
                    updatePath();
                } else {
-                   println("Invalid index selected: " + selectedIndex);
+                   println("Ugyldigt indeks valgt: " + selectedIndex);
                }
            });
 
@@ -54,19 +54,19 @@ class UIController {
            .onChange(event -> {
                int selectedIndex = (int) event.getController().getValue();
                if (selectedIndex >= 0 && selectedIndex < roomIds.length) {
-               endNode = roomIds[selectedIndex];
-               event.getController().setCaptionLabel(endNode);
-               println("Slutnode valgt: " + endNode);
-               updatePath();
+                   endNode = roomIds[selectedIndex];
+                   event.getController().setCaptionLabel(endNode);
+                   println("Slutnode valgt: " + endNode);
+                   updatePath();
                } else {
-               println("Invalid index selected: " + selectedIndex);
+                   println("Ugyldigt indeks valgt: " + selectedIndex);
                }
            });
 
-        // knapper til at skifte etager
+        // Knapper til at skifte etager
         cp5.addButton("floorUp")
            .setLabel("Op")
-           .setPosition(700, parent.height - 200) // Adjusted y-position to match dropdown menus
+           .setPosition(700, parent.height - 200) // Justeret y-position for at matche dropdown-menuer
            .setSize(50, 30)
            .setColorBackground(color(50))
            .setColorActive(color(150))
@@ -79,7 +79,7 @@ class UIController {
 
         cp5.addButton("floorDown")
            .setLabel("Ned")
-           .setPosition(760, parent.height - 200) // Adjusted y-position to match dropdown menus
+           .setPosition(760, parent.height - 200) // Justeret y-position for at matche dropdown-menuer
            .setSize(50, 30)
            .setColorBackground(color(50))
            .setColorActive(color(150))
@@ -90,7 +90,7 @@ class UIController {
                updateFloorButtons();
            });
 
-        //  etiket for at vise den aktuelle etage
+        // Etiket for at vise den aktuelle etage
         cp5.addTextlabel("floorLabel")
            .setText("Etage: " + parent.currentFloor)
            .setPosition(700, 150)
@@ -117,7 +117,7 @@ class UIController {
 
         parent.updatePath(startNode, endNode);
 
-        // Calculate and print the total weight of the path
+        // Beregn og udskriv den samlede vægt af stien
         List<Node> path = parent.path;
         if (path != null && path.size() > 1) {
             int totalWeight = 0;
@@ -127,9 +127,9 @@ class UIController {
                 int weight = graph.adjacencyList.get(current.id).get(next.id);
                 totalWeight += weight;
             }
-            println("Total weight of the path: " + totalWeight);
+            println("Samlet vægt af stien: " + totalWeight);
         } else {
-            println("No valid path found.");
+            println("Ingen gyldig sti fundet.");
         }
     }
 
@@ -149,12 +149,12 @@ class UIController {
                 for (int i = 0; i < Math.min(aParts.length, bParts.length); i++) {
                     try {
                         int comparison = Integer.compare(
-                            Integer.parseInt(aParts[i]), 
+                            Integer.parseInt(aParts[i]),
                             Integer.parseInt(bParts[i])
                         );
                         if (comparison != 0) return comparison;
                     } catch (NumberFormatException e) {
-                        // Fallback to lexicographical comparison for non-numeric parts
+                        // Fald tilbage til leksikografisk sammenligning for ikke-numeriske dele
                         int comparison = aParts[i].compareTo(bParts[i]);
                         if (comparison != 0) return comparison;
                     }
