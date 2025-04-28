@@ -232,6 +232,7 @@
     { "from": "dør 1.05a", "to": "gang 1.05a"},
     { "from": "dør 1.05a", "to": "gang 1.05a"},
     { "from": "gang 1.07", "to": "gang 1.10"},
+    { "from": "gang 1.07", "to": "gang 1.09"},
     { "from": "gang 1.10", "to": "gang 1.05a"},
     { "from": "gang 1.05a", "to": "gang foran 1.05a"},
     { "from": "gang foran 1.05a", "to": "gang 1.01"},
