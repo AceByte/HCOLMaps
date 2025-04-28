@@ -42,7 +42,7 @@
 
 
 
-    { "type": "Intersection", "id": "dør 0.01", "x": 260, "y": 262, "floor": 1 }, 
+    { "type": "Intersection", "id": "dør 0.01", "x": 260, "y": 262, "floor": 1 },
     { "type": "Intersection", "id": "dør 0.07a", "x": 330, "y": 190, "floor": 1 },
     { "type": "Intersection", "id": "dør 0.10", "x": 400, "y": 200, "floor": 1 },
     { "type": "Intersection", "id": "dør 0.09", "x": 360, "y": 210, "floor": 1 },
@@ -67,7 +67,7 @@
     { "type": "Intersection", "id": "gang 0.10", "x": 415, "y": 211, "floor": 1 },
     { "type": "Intersection", "id": "syd trappe gang", "x": 344, "y": 303, "floor": 1 },
 
- 
+
 
     { "type": "Intersection", "id": "dør 1.09", "x": 481, "y": 166, "floor": 2 },
     { "type": "Intersection", "id": "bagdør 1.09", "x": 545, "y": 66, "floor": 2 },
@@ -230,7 +230,7 @@
     { "from": "dør 1.07", "to": "gang 1.07"},
     { "from": "dør 1.10", "to": "gang 1.10"},
     { "from": "dør 1.05a", "to": "gang 1.05a"},
-    { "from": "dør 1.05a", "to": "gang 1.o5a"},
+    { "from": "dør 1.05a", "to": "gang 1.05a"},
     { "from": "gang 1.07", "to": "gang 1.10"},
     { "from": "gang 1.10", "to": "gang 1.05a"},
     { "from": "gang 1.05a", "to": "gang foran 1.05a"},
